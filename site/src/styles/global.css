@@ -1,44 +1,42 @@
 /* ==========================================================================
    NetLens — design system (Astro site)
-   Dark-first, system dark-mode + manual toggle.
-   Node.js-inspired green accents with a teal "net" secondary.
+   Updated to a cleaner GitHub-inspired visual language with a stronger hero layout.
    ========================================================================== */
 
-/* ---------- Light theme (default tokens) ---------- */
 :root {
-  --bg: #ffffff;
-  --bg-subtle: #f6f8fa;
+  --bg: #f5f9f7;
+  --bg-subtle: #eef5f1;
   --bg-panel: #ffffff;
   --bg-code: #0d1117;
   --bg-terminal: #0d1117;
-  --border: #d0d7de;
-  --border-muted: #e3e7eb;
-  --text: #1f2328;
-  --text-dim: #59636e;
-  --accent: #1a7f37;
-  --accent-2: #2ea44f;
-  --accent-3: #0d9488;
-  --green: #2ea44f;
-  --green-hover: #2c974b;
-  --teal: #0d9488;
-  --amber: #9a6700;
+  --border: #d7e4db;
+  --border-muted: #e4efe8;
+  --text: #17212b;
+  --text-dim: #53656f;
+  --accent: #1d9a63;
+  --accent-2: #2ec27e;
+  --accent-3: #1ca5b5;
+  --green: #1f9d64;
+  --green-hover: #198e5d;
+  --teal: #1ca5b5;
+  --amber: #a66d00;
   --red: #cf222e;
-  --shadow-sm: 0 1px 2px rgba(31, 35, 40, 0.06);
-  --shadow-md: 0 4px 16px rgba(31, 35, 40, 0.08);
-  --shadow-lg: 0 16px 44px rgba(31, 35, 40, 0.12);
-  --grad: linear-gradient(120deg, #2ea44f 0%, #3fb950 45%, #14b8a6 100%);
-  --grad-soft: linear-gradient(120deg, rgba(46, 164, 79, 0.10), rgba(20, 184, 166, 0.10));
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 10px 30px rgba(22, 34, 42, 0.08);
+  --shadow-lg: 0 18px 50px rgba(14, 25, 35, 0.12);
+  --grad: linear-gradient(135deg, #1d9a63 0%, #35c57d 40%, #26c0c6 100%);
+  --grad-soft: linear-gradient(135deg, rgba(29, 154, 99, 0.12), rgba(38, 192, 198, 0.12));
   --term-text: #e6edf3;
   --term-border: #30363d;
   --term-bar: #161b22;
   --term-comment: #8b949e;
   --term-prompt: #3fb950;
-  --hero-glow: rgba(46, 164, 79, 0.16);
-  --ring: rgba(46, 164, 79, 0.25);
+  --hero-glow: rgba(31, 157, 100, 0.14);
+  --ring: rgba(31, 157, 100, 0.2);
   --radius: 10px;
-  --radius-lg: 14px;
-  --maxw: 1100px;
-  --nav-h: 64px;
+  --radius-lg: 16px;
+  --maxw: 1180px;
+  --nav-h: 68px;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
@@ -240,18 +238,16 @@ header {
    Hero
    ========================================================================== */
 .hero {
-  padding: 92px 0 84px;
-  text-align: center;
+  padding: 88px 0 78px;
   border-bottom: 1px solid var(--border-muted);
   position: relative;
   overflow: hidden;
   background:
     radial-gradient(900px 380px at 50% -120px, var(--hero-glow), transparent 70%),
-    radial-gradient(520px 260px at 88% 30%, rgba(45, 212, 191, 0.06), transparent 70%),
+    radial-gradient(520px 260px at 95% 20%, rgba(45, 212, 191, 0.09), transparent 70%),
     var(--bg);
 }
 .hero::before {
-  /* subtle grid — "net" vibe */
   content: "";
   position: absolute;
   inset: 0;
@@ -259,29 +255,54 @@ header {
     linear-gradient(var(--border-muted) 1px, transparent 1px),
     linear-gradient(90deg, var(--border-muted) 1px, transparent 1px);
   background-size: 44px 44px;
-  opacity: 0.22;
-  -webkit-mask-image: radial-gradient(600px 320px at 50% 0%, #000 0%, transparent 75%);
-  mask-image: radial-gradient(600px 320px at 50% 0%, #000 0%, transparent 75%);
+  opacity: 0.18;
+  -webkit-mask-image: radial-gradient(700px 340px at 50% 0%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(700px 340px at 50% 0%, #000 0%, transparent 72%);
   pointer-events: none;
 }
 .hero .container { position: relative; }
-
-.hero-logo { margin-bottom: 22px; display: inline-flex; }
-.hero-logo svg { height: 78px; width: auto; filter: drop-shadow(0 8px 24px rgba(46, 164, 79, 0.25)); }
-
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 36px;
+}
+.hero-copy { text-align: left; }
+.hero-logo { margin-bottom: 18px; display: inline-flex; }
+.hero-logo svg { height: 78px; width: auto; filter: drop-shadow(0 10px 26px rgba(29, 154, 99, 0.18)); }
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--grad-soft);
+  border: 1px solid var(--ring);
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
 .hero h1 {
-  font-size: 3rem;
-  letter-spacing: -0.03em;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  letter-spacing: -0.05em;
   margin-bottom: 14px;
-  line-height: 1.1;
+  line-height: 0.96;
   font-weight: 800;
+  max-width: 620px;
 }
 .hero p.tagline {
-  font-size: 1.14rem;
+  font-size: 1.12rem;
   color: var(--text-dim);
-  max-width: 680px;
-  margin: 0 auto 36px;
+  max-width: 600px;
+  margin: 0 0 28px;
 }
+.hero-panel {
+  display: flex;
+  justify-content: center;
+}
+.hero-panel .terminal-wrap { margin: 0; max-width: 520px; width: 100%; }
 
 /* ==========================================================================
    Terminal window
@@ -358,8 +379,8 @@ header {
 /* ==========================================================================
    CTA row + badges
    ========================================================================== */
-.cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
-.badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.cta { display: flex; gap: 14px; justify-content: flex-start; flex-wrap: wrap; margin-bottom: 32px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-start; }
 .badges img { height: 22px; border-radius: 4px; }
 
 /* ==========================================================================
@@ -710,6 +731,10 @@ footer a:hover { color: var(--accent); text-decoration: none; }
 
 @media (max-width: 760px) {
   .hero { padding: 60px 0 52px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 20px; }
+  .hero-copy { text-align: center; }
+  .cta, .badges { justify-content: center; }
+  .hero p.tagline { margin-left: auto; margin-right: auto; }
   .hero h1 { font-size: 2.1rem; }
   .hero p.tagline { font-size: 1.02rem; }
   .hero-logo svg { height: 60px; }
@@ -727,7 +752,6 @@ footer a:hover { color: var(--accent); text-decoration: none; }
 }
 
 @media (max-width: 600px) {
-  /* Long commands wrap instead of overflowing the screen */
   .code-block pre, article.docs pre {
     white-space: pre-wrap;
     word-break: break-word;

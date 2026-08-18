@@ -1,7 +1,6 @@
 ---
 /**
- * NetLens mark — a lens with data-flow lines passing through it ("net" vibe).
- * Renders a clean SVG icon; drop into header / hero / footer.
+ * NetLens mark — a modern network-lens identity with a clean N-based flow motif.
  */
 interface Props {
   size?: number;
@@ -21,39 +20,26 @@ const { size = 38, class: className = "", title = "NetLens" } = Astro.props;
 >
   <defs>
     <linearGradient id="nl-bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#10261a" />
-      <stop offset="100%" stop-color="#07150d" />
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#071317" />
     </linearGradient>
-    <linearGradient id="nl-lens" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#6CC24A" />
-      <stop offset="55%" stop-color="#3fb950" />
-      <stop offset="100%" stop-color="#2dd4bf" />
+    <linearGradient id="nl-ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6ee7b7" />
+      <stop offset="50%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#22d3ee" />
     </linearGradient>
   </defs>
 
-  <!-- App-icon squircle -->
-  <rect x="2" y="2" width="44" height="44" rx="13" fill="url(#nl-bg)" stroke="#22352a" stroke-width="1.5" />
-  <rect x="2" y="2" width="44" height="20" rx="13" fill="#ffffff" opacity="0.045" />
+  <rect x="2" y="2" width="44" height="44" rx="14" fill="url(#nl-bg)" stroke="#1f3a2d" stroke-width="1.5" />
+  <path d="M9 33V15.5h5.2l7.6 12.8 7.4-12.8H39V33h-4.8V22.2l-8.2 14h-2.4l-8.3-14V33H9Z" fill="url(#nl-ring)" opacity="0.95" />
 
-  <!-- Flow lines (net vibe) passing behind the lens -->
-  <g stroke="url(#nl-lens)" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.85">
-    <path d="M7 15.5 H 41" />
-    <path d="M7 24 H 41" />
-    <path d="M7 32.5 H 41" />
-  </g>
-  <!-- Node dots at line ends -->
-  <g fill="#2dd4bf">
-    <circle cx="41" cy="15.5" r="2.1" />
-    <circle cx="41" cy="24" r="2.1" />
-    <circle cx="41" cy="32.5" r="2.1" />
+  <g stroke="url(#nl-ring)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.9">
+    <path d="M7 12.5H41" />
+    <path d="M7 35.5H41" />
+    <path d="M10 9.5V38.5" />
+    <path d="M38 9.5V38.5" />
   </g>
 
-  <!-- Lens glass (lets the flow lines show through) -->
-  <circle cx="24" cy="24" r="12.5" fill="url(#nl-lens)" opacity="0.10" />
-  <!-- Lens ring -->
-  <circle cx="24" cy="24" r="12.5" fill="none" stroke="url(#nl-lens)" stroke-width="3" />
-  <!-- Glare highlight -->
-  <path d="M15.2 18.2 a 12.5 12.5 0 0 1 7.2 -5.2" fill="none" stroke="#ffffff" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round" />
-  <!-- Focal dot -->
-  <circle cx="24" cy="24" r="2.4" fill="#ffffff" opacity="0.9" />
+  <circle cx="39" cy="12.5" r="2.2" fill="#67e8f9" />
+  <circle cx="9" cy="35.5" r="2.2" fill="#a7f3d0" />
 </svg>
