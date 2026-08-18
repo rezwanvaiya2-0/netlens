@@ -14,13 +14,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Dhaka
 
 # ===========================================================================
-# STEP 0: Copy the credit banner script - it is shown at container START
-# (in the entrypoint), NOT during the build, to keep the build log clean.
-# ===========================================================================
-COPY banner.sh /usr/local/bin/nfsen-banner.sh
-RUN chmod +x /usr/local/bin/nfsen-banner.sh
-
-# ===========================================================================
 # STEP 1: Install Dependencies
 # ===========================================================================
 # Removed vs the original guide: doxygen + graphviz (API-doc generation only)

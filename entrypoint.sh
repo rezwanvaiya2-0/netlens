@@ -11,10 +11,6 @@ echo "  NfSen 1.3.6p1 + NfDump 1.6.17 Docker Container"
 echo "  Ubuntu 20.04"
 echo "========================================================================="
 
-# Credit popup - shown once, at container start. Pauses 5s so the whole box
-# is clearly visible before services start.
-/usr/local/bin/nfsen-banner.sh 5
-
 # ---------------------------------------------------------------------------
 # Seed nfsen.conf on a fresh nfsen-etc bind mount
 # ---------------------------------------------------------------------------

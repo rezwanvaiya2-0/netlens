@@ -36,7 +36,7 @@ cd netlens
 sudo ./install.sh          # build & start (same as docker compose up -d --build)
 ```
 
-> `./install.sh` is exactly `docker compose up -d --build` — no banner popup, it just builds and starts the container.
+> `./install.sh` is exactly `docker compose up -d --build`.
 
 > **`--build` is only needed on the first run.** After that, restarting the container only requires `docker-compose down && docker-compose up -d` (no `--build`). Your sources, config, and data all persist thanks to the data folders next to `docker-compose.yml` (see [Data Folders](#data-folders-bind-mounts)).
 

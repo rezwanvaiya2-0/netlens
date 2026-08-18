@@ -5,9 +5,6 @@
 # Usage (on your VPS, inside the netlens folder):
 #     sudo ./install.sh                 # same as: docker compose up -d --build
 #     sudo ./install.sh up -d           # plain start, no rebuild
-#
-# No popup / countdown here — the startup banner is shown by the container's
-# entrypoint when it starts, so it appears in `docker logs` (not in install).
 # =============================================================================
 
 # =============================================================================

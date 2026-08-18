@@ -31,7 +31,7 @@ Open an issue describing the problem you are trying to solve, your proposed solu
 - Keep dependencies to zero: this image is intentionally self-contained (no new packages unless required).
 - `bash` scripts and PHP config follow the existing style in the repo — minimal, commented, readable.
 - Do not break the data-folder (bind mount) layout: `nfsen-data/`, `nfsen-stat/`, `nfsen-var/`, `nfsen-etc/` must keep working on existing installs.
-- The login page and startup banner are brand-neutral — keep them that way.
+- The login page is brand-neutral — keep it that way.
 
 ## Getting help
 
