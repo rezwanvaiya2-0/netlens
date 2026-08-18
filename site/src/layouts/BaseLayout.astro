@@ -60,6 +60,11 @@ const SITE = "https://netlens.rezwan.bro.bd";
 
         function applyTheme(theme) {
           document.documentElement.setAttribute("data-theme", theme);
+          var toggle = document.querySelector(".theme-toggle");
+          if (toggle) {
+            var nextLabel = theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
+            toggle.setAttribute("aria-label", nextLabel);
+          }
         }
         function systemTheme() {
           return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -78,11 +83,20 @@ const SITE = "https://netlens.rezwan.bro.bd";
           });
         }
         if (window.matchMedia) {
-          window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (e) {
-            var saved = null;
-            try { saved = localStorage.getItem(STORAGE_KEY); } catch (err) {}
-            if (!saved) applyTheme(e.matches ? "dark" : "light");
-          });
+          var media = window.matchMedia("(prefers-color-scheme: dark)");
+          if (media.addEventListener) {
+            media.addEventListener("change", function (e) {
+              var saved = null;
+              try { saved = localStorage.getItem(STORAGE_KEY); } catch (err) {}
+              if (!saved) applyTheme(e.matches ? "dark" : "light");
+            });
+          } else if (media.addListener) {
+            media.addListener(function (e) {
+              var saved = null;
+              try { saved = localStorage.getItem(STORAGE_KEY); } catch (err) {}
+              if (!saved) applyTheme(e.matches ? "dark" : "light");
+            });
+          }
         }
 
         /* --- Copy to clipboard --- */

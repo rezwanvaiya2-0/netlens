@@ -435,15 +435,6 @@ If you ever see **Permission denied**:
 
 For the goal of this guide (LibreNMS on another server), pattern A (read-only export) is the right choice — no reason to move NfSen's primary storage.
 
-## 12 — What can be automated later
-
-These are things that can be added to the project when you're ready (nothing is changed yet):
-
-- `nfs-server-setup.sh` — script for the VPS: installs `nfs-kernel-server`, writes `/etc/exports` from your answers, `exportfs`
-- `nfs-client-setup.sh` — script for the LibreNMS server: installs `nfs-common`, mounts, writes `/etc/fstab`
-- `librenms-nfsen-config.sh` — runs all the `lnms config:set` commands above
-- A LibreNMS docker-compose example that mounts the NFS share as volumes
-
 ## Summary
 
 - **Goal:** LibreNMS (separate server) shows NetFlow graphs + top-N stats from the Dockerized NfSen.

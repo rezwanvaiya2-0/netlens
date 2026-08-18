@@ -7,8 +7,12 @@
   --bg: #f5f9f7;
   --bg-subtle: #eef5f1;
   --bg-panel: #ffffff;
-  --bg-code: #0d1117;
+  --bg-code: #f8fafc;
   --bg-terminal: #0d1117;
+  --code-surface: #f6f8fa;
+  --code-border: #dfe7e2;
+  --code-text: #0f172a;
+  --code-comment: #475569;
   --border: #d7e4db;
   --border-muted: #e4efe8;
   --text: #17212b;
@@ -48,6 +52,10 @@
   --bg-panel: #161b16;
   --bg-code: #010409;
   --bg-terminal: #0d1117;
+  --code-surface: #0f172a;
+  --code-border: #243244;
+  --code-text: #e2e8f0;
+  --code-comment: #9aa7b6;
   --border: #2d3438;
   --border-muted: #22292b;
   --text: #e6edf3;
@@ -169,34 +177,54 @@ header {
 .brand .brand-text { font-size: 1.22rem; font-weight: 800; letter-spacing: -0.02em; }
 .brand .brand-text .accent { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
-.nav-links { display: flex; gap: 24px; align-items: center; }
+.nav-links {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid var(--border-muted);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-panel) 82%, transparent);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+}
 .nav-links > a:not(.btn) {
   color: var(--text-dim);
   font-size: 0.95rem;
-  font-weight: 500;
-  padding: 6px 2px;
-  transition: color 0.12s ease;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 999px;
+  transition: color 0.14s ease, background 0.14s ease;
 }
-.nav-links > a:not(.btn):hover { color: var(--text); text-decoration: none; }
+.nav-links > a:not(.btn):hover {
+  color: var(--text);
+  text-decoration: none;
+  background: var(--bg-subtle);
+}
 
-/* GitHub icon button */
 .btn-github {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 8px 14px;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 999px;
+  font-weight: 700;
   font-size: 0.88rem;
   border: 1px solid var(--border);
   background: var(--bg-panel);
   color: var(--text);
   box-shadow: var(--shadow-sm);
-  transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+  transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease, color 0.12s ease;
   white-space: nowrap;
   flex: none;
 }
-.btn-github:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; background: var(--bg-subtle); }
+.btn-github:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  background: var(--bg-subtle);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
 .btn-github svg { flex: none; }
 
 /* Theme toggle */
@@ -491,19 +519,24 @@ section h3 { font-size: 1.14rem; margin: 30px 0 12px; letter-spacing: -0.01em; }
    ========================================================================== */
 .code-block { position: relative; margin: 18px 0; }
 .code-block pre {
-  background: var(--bg-code);
-  border: 1px solid var(--border-muted);
-  border-radius: 12px;
-  padding: 46px 20px 18px;   /* top room for the copy button */
+  background: var(--code-surface);
+  border: 1px solid var(--code-border);
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 10px 24px rgba(15, 23, 42, 0.06);
+  padding: 46px 20px 18px;
   overflow-x: auto;
   font-size: 0.86rem;
   line-height: 1.65;
+  color: var(--code-text);
   font-family: var(--font-mono);
 }
 article.docs pre {
-  padding: 46px 20px 18px;   /* same — Shiki blocks are direct children of article */
+  padding: 46px 20px 18px;
+  background: var(--code-surface);
+  color: var(--code-text);
+  border: 1px solid var(--code-border);
 }
-.code-block pre code { font-family: inherit; background: none; border: none; padding: 0; font-size: inherit; }
+.code-block pre code { font-family: inherit; background: none; border: none; padding: 0; font-size: inherit; color: var(--code-text); }
 pre { position: relative; }
 .copy-btn {
   position: absolute;
@@ -676,14 +709,14 @@ footer a:hover { color: var(--accent); text-decoration: none; }
    ========================================================================== */
 @media (max-width: 900px) {
   .docs-layout { grid-template-columns: 1fr; gap: 24px; }
-  /* TOC becomes a horizontal chip row on tablets / phones */
   .docs-toc {
     position: static;
     max-height: none;
-    border: none;
-    background: none;
-    padding: 0;
+    border: 1px solid var(--border-muted);
+    background: var(--bg-panel);
+    padding: 12px 14px;
     margin-bottom: 8px;
+    border-radius: 14px;
   }
   .docs-toc h4 { margin-bottom: 10px; padding: 0; }
   .docs-toc ol {
@@ -717,16 +750,17 @@ footer a:hover { color: var(--accent); text-decoration: none; }
     left: 0; right: 0;
     flex-direction: column;
     align-items: stretch;
-    gap: 0;
-    background: var(--bg);
+    gap: 8px;
+    background: var(--bg-panel);
     border-bottom: 1px solid var(--border-muted);
-    padding: 12px 24px 20px;
+    border-radius: 0 0 18px 18px;
+    padding: 16px 20px 20px;
     box-shadow: var(--shadow-md);
   }
   .nav-links.open { display: flex; }
-  .nav-links > a:not(.btn) { padding: 12px 4px; font-size: 1rem; }
-  .nav-links .btn-github { align-self: stretch; justify-content: center; margin-top: 12px; }
-  .nav-links .theme-toggle { align-self: flex-start; margin-top: 12px; }
+  .nav-links > a:not(.btn) { padding: 10px 12px; font-size: 1rem; }
+  .nav-links .btn-github { align-self: stretch; justify-content: center; margin-top: 4px; }
+  .nav-links .theme-toggle { align-self: flex-start; margin-top: 4px; }
 }
 
 @media (max-width: 760px) {
