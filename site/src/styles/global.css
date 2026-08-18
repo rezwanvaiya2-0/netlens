@@ -195,6 +195,8 @@ header {
   color: var(--text);
   box-shadow: var(--shadow-sm);
   transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+  white-space: nowrap;
+  flex: none;
 }
 .btn-github:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; background: var(--bg-subtle); }
 .btn-github svg { flex: none; }
@@ -334,8 +336,8 @@ header {
 
 .terminal-copy {
   position: absolute;
-  top: 62px;
-  right: 18px;
+  top: 24px;
+  right: 20px;
   padding: 5px 12px;
   font-size: 0.76rem;
   font-weight: 600;
@@ -471,11 +473,14 @@ section h3 { font-size: 1.14rem; margin: 30px 0 12px; letter-spacing: -0.01em; }
   background: var(--bg-code);
   border: 1px solid var(--border-muted);
   border-radius: 12px;
-  padding: 18px 20px;
+  padding: 46px 20px 18px;   /* top room for the copy button */
   overflow-x: auto;
   font-size: 0.86rem;
   line-height: 1.65;
   font-family: var(--font-mono);
+}
+article.docs pre {
+  padding: 46px 20px 18px;   /* same — Shiki blocks are direct children of article */
 }
 .code-block pre code { font-family: inherit; background: none; border: none; padding: 0; font-size: inherit; }
 pre { position: relative; }
@@ -573,6 +578,7 @@ ul.tick li strong { color: var(--text); }
 /* ==========================================================================
    Docs page
    ========================================================================== */
+article.docs p, article.docs li, section p { overflow-wrap: break-word; }
 .docs-wrap { padding: 56px 0 72px; }
 .docs-layout { display: grid; grid-template-columns: 264px 1fr; gap: 44px; align-items: start; }
 .docs-toc {
@@ -648,11 +654,40 @@ footer a:hover { color: var(--accent); text-decoration: none; }
    Responsive
    ========================================================================== */
 @media (max-width: 900px) {
-  .docs-layout { grid-template-columns: 1fr; }
-  .docs-toc { position: static; max-height: none; }
+  .docs-layout { grid-template-columns: 1fr; gap: 24px; }
+  /* TOC becomes a horizontal chip row on tablets / phones */
+  .docs-toc {
+    position: static;
+    max-height: none;
+    border: none;
+    background: none;
+    padding: 0;
+    margin-bottom: 8px;
+  }
+  .docs-toc h4 { margin-bottom: 10px; padding: 0; }
+  .docs-toc ol {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 8px;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .docs-toc ol li { margin: 0; flex: none; }
+  .docs-toc ol li a {
+    white-space: nowrap;
+    border: 1px solid var(--border-muted);
+    border-radius: 999px;
+    padding: 6px 14px;
+    background: var(--bg-panel);
+  }
+  .docs-toc ol li a::before { content: ""; display: none; }
+  .docs-toc ol li a:hover { background: var(--bg-subtle); }
 }
 
-@media (max-width: 760px) {
+/* Nav collapses to hamburger earlier so the GitHub button never crowds */
+@media (max-width: 920px) {
   .nav-toggle { display: flex; }
   .nav-links {
     display: none;
@@ -664,12 +699,16 @@ footer a:hover { color: var(--accent); text-decoration: none; }
     gap: 0;
     background: var(--bg);
     border-bottom: 1px solid var(--border-muted);
-    padding: 12px 24px 18px;
+    padding: 12px 24px 20px;
     box-shadow: var(--shadow-md);
   }
   .nav-links.open { display: flex; }
   .nav-links > a:not(.btn) { padding: 12px 4px; font-size: 1rem; }
-  .nav-links .btn-github, .nav-links .theme-toggle { align-self: flex-start; margin-top: 10px; }
+  .nav-links .btn-github { align-self: stretch; justify-content: center; margin-top: 12px; }
+  .nav-links .theme-toggle { align-self: flex-start; margin-top: 12px; }
+}
+
+@media (max-width: 760px) {
   .hero { padding: 60px 0 52px; }
   .hero h1 { font-size: 2.1rem; }
   .hero p.tagline { font-size: 1.02rem; }
@@ -678,12 +717,33 @@ footer a:hover { color: var(--accent); text-decoration: none; }
   section h2 { font-size: 1.5rem; }
   .terminal-body { padding: 18px 20px; }
   .terminal-body pre { font-size: 0.78rem; }
-  .terminal-copy { top: 56px; right: 12px; }
+  .terminal-copy { top: 18px; right: 12px; }
   article.docs h1 { font-size: 1.55rem; }
   article.docs h2 { font-size: 1.22rem; }
-  .code-block pre { font-size: 0.78rem; padding: 14px 16px; }
-  .code-block .copy-btn { opacity: 1; }
+  .code-block pre, article.docs pre { font-size: 0.8rem; padding: 44px 14px 14px; }
   table { display: block; overflow-x: auto; white-space: nowrap; }
+  .docs-wrap { padding: 40px 0 56px; }
+  .cards { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  /* Long commands wrap instead of overflowing the screen */
+  .code-block pre, article.docs pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .code-block pre code, article.docs pre code {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .hero h1 { font-size: 1.85rem; }
+  .cta .btn-lg { width: 100%; }
+}
+
+@media (max-width: 560px) {
+  .pipeline { flex-direction: column; align-items: stretch; }
+  .pipe-node { max-width: 100%; flex: 1 1 auto; }
+  .pipe-arrow { transform: rotate(90deg); align-self: center; padding: 2px 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
