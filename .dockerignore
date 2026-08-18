@@ -1,0 +1,10 @@
+.git
+.gitignore
+*.md
+backup/
+
+# Bind-mount data folders (never copy live data into the build context)
+nfsen-data/
+nfsen-stat/
+nfsen-var/
+nfsen-etc/

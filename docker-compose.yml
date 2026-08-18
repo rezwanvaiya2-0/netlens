@@ -1,0 +1,55 @@
+services:
+  nfsen:
+    # image name lets you docker push / docker pull instead of rebuilding
+    # (~7 min source compile) on every new VPS
+    image: netlens:latest
+    build: .
+    container_name: netlens
+    hostname: nfsen
+    restart: unless-stopped
+    ports:
+      - "8070:8070"
+      # Only the UDP ports you actually use are published (2055 + 2056).
+      # To open a new port for a router: add its line here and add the source
+      # to the NFSEN_SOURCES environment variable below, then run
+      # `docker compose up -d` (~3s, no rebuild, no data loss). NEVER use
+      # `down -v` unless you want to wipe your data.
+      - "2055:2055/udp"
+      - "2056:2056/udp"
+    volumes:
+      # Bind mounts: data lives in REAL folders next to docker-compose.yml
+      # (nfsen-data/ nfsen-stat/ nfsen-var/ nfsen-etc/) so you can see, browse,
+      # back up, and mount/unmount them without ever losing data. The folders
+      # are created automatically on first start.
+      - ./nfsen-data:/var/nfsen/profiles-data
+      - ./nfsen-stat:/var/nfsen/profiles-stat
+      - ./nfsen-var:/var/nfsen/var
+      # nfsen.conf lives here - so router sources added via `docker exec`
+      # persist forever (restarts, recreates, even rebuilds). No env vars needed.
+      # On a fresh (empty) folder the entrypoint seeds the default config
+      # + demo source automatically.
+      - ./nfsen-etc:/var/nfsen/etc
+    environment:
+      - TZ=Asia/Dhaka
+      # Password protection (login page): when nfsen-etc/.htpasswd does not
+      # exist yet, the entrypoint creates the default login user below.
+      # CHANGE THE PASSWORD right after first login with:
+      #   docker exec netlens htpasswd -b /var/nfsen/etc/.htpasswd admin <newpass>
+      # Uncomment to customize the defaults:
+      # - NFSEN_ADMIN_USER=admin
+      # - NFSEN_ADMIN_PASSWORD=change-me-now
+      # A demo source 'router1' on port 2055 ships by default (in
+      # config/nfsen.conf) so the Web UI shows graph placeholders on first
+      # install. Add your real routers manually (docker exec method in the
+      # README). NFSEN_SOURCES is optional - use it only if you prefer
+      # managing all sources here, e.g.:
+      # - NFSEN_SOURCES=2055:router1:#0000ff,2070:myrouter:#FF0000
+    # No extra Linux capabilities are needed: nfcapd collects NetFlow over
+    # plain UDP sockets (sources are defined by port in nfsen.conf). If you
+    # ever switch nfcapd to live interface capture (-I), re-add NET_RAW.
+    networks:
+      - nfsen-net
+
+networks:
+  nfsen-net:
+    driver: bridge

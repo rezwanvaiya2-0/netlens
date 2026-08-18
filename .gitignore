@@ -1,0 +1,11 @@
+# macOS junk
+.DS_Store
+
+# Local backup folder (keep on this machine only - never commit or push)
+backup/
+
+# Bind-mount data folders (created on the server - huge, never commit or push)
+nfsen-data/
+nfsen-stat/
+nfsen-var/
+nfsen-etc/
