@@ -1,0 +1,68 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+// Works both as a component (index) and as an MDX layout (frontmatter props).
+const frontmatter = (Astro.props.frontmatter ?? {}) as Record<string, string>;
+const title = Astro.props.title ?? frontmatter.title ?? "NetLens Docs";
+const description =
+  Astro.props.description ??
+  frontmatter.description ??
+  "NetLens documentation.";
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="docs-wrap">
+    <div class="container docs-layout">
+      <aside class="docs-toc" aria-label="Table of contents">
+        <h4>On this page</h4>
+        <ol id="toc-list"></ol>
+      </aside>
+
+      <article class="docs">
+        <nav class="docs-breadcrumb">
+          <a href="/">Home</a> / LibreNMS Integration
+        </nav>
+        <slot />
+      </article>
+    </div>
+  </div>
+
+  <!-- Build the TOC from article h2 headings + scroll-spy -->
+  <script>
+    (function () {
+      var list = document.getElementById("toc-list");
+      var article = document.querySelector("article.docs");
+      if (!list || !article) return;
+
+      var headings = Array.prototype.slice.call(article.querySelectorAll("h2"));
+      var links = [];
+      headings.forEach(function (h, i) {
+        if (!h.id) h.id = "section-" + (i + 1);
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = "#" + h.id;
+        a.textContent = h.textContent.replace(/^\d+\s*[—.–-]?\s*/, "").trim();
+        li.appendChild(a);
+        list.appendChild(li);
+        links.push({ link: a, el: h });
+      });
+
+      function onScroll() {
+        var pos = window.scrollY + 150;
+        var current = null;
+        links.forEach(function (item) {
+          if (item.el.offsetTop <= pos) current = item;
+        });
+        links.forEach(function (item) {
+          item.link.classList.toggle("active", item === current);
+        });
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+</BaseLayout>

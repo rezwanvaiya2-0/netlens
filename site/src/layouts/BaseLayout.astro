@@ -1,0 +1,155 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+const SITE = "https://netlens.rezwan.bro.bd";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={`${SITE}${Astro.url.pathname}`} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={`${SITE}${Astro.url.pathname}`} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href={"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"}
+      rel="stylesheet"
+    />
+
+    <!-- Apply theme before first paint (no flash) -->
+    <script is:inline>
+      (function () {
+        var saved = null;
+        try { saved = localStorage.getItem("netlens-theme"); } catch (e) {}
+        var theme =
+          saved ||
+          (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+  </head>
+
+  <body>
+    <Header />
+    <slot />
+    <Footer />
+
+    <!-- Shared client behavior: theme toggle, copy buttons, nav, scroll-spy -->
+    <script>
+      (function () {
+        "use strict";
+        var STORAGE_KEY = "netlens-theme";
+
+        function applyTheme(theme) {
+          document.documentElement.setAttribute("data-theme", theme);
+        }
+        function systemTheme() {
+          return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+
+        /* --- Theme toggle --- */
+        var toggle = document.querySelector(".theme-toggle");
+        if (toggle) {
+          toggle.addEventListener("click", function () {
+            var current = document.documentElement.getAttribute("data-theme");
+            var next = current === "dark" ? "light" : "dark";
+            applyTheme(next);
+            try { localStorage.setItem(STORAGE_KEY, next); } catch (e) {}
+          });
+        }
+        if (window.matchMedia) {
+          window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (e) {
+            var saved = null;
+            try { saved = localStorage.getItem(STORAGE_KEY); } catch (err) {}
+            if (!saved) applyTheme(e.matches ? "dark" : "light");
+          });
+        }
+
+        /* --- Copy to clipboard --- */
+        function copyText(text, btn) {
+          var done = function () {
+            btn.classList.add("copied");
+            var span = btn.querySelector("span");
+            if (span) span.textContent = "Copied!";
+            setTimeout(function () {
+              btn.classList.remove("copied");
+              if (span) span.textContent = "Copy";
+            }, 1600);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
+          } else {
+            fallbackCopy(text, done);
+          }
+        }
+        function fallbackCopy(text, done) {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); done(); } catch (e) {}
+          document.body.removeChild(ta);
+        }
+
+        // Copy buttons on every code block (except the hero terminal — it has its own)
+        document.querySelectorAll(".code-block pre").forEach(function (pre) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "copy-btn";
+          btn.setAttribute("aria-label", "Copy code");
+          btn.innerHTML =
+            '<svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5Z"/><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25v-7.5Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25h-7.5Z"/></svg><span>Copy</span>';
+          btn.addEventListener("click", function () { copyText(pre.innerText, btn); });
+          pre.parentNode.appendChild(btn);
+        });
+
+        // Hero terminal copy (always-visible button)
+        var termBtn = document.querySelector(".terminal-copy");
+        var termPre = document.querySelector(".terminal-body pre");
+        if (termBtn && termPre) {
+          termBtn.addEventListener("click", function () { copyText(termPre.innerText, termBtn); });
+        }
+
+        /* --- Mobile hamburger nav --- */
+        var navToggle = document.querySelector(".nav-toggle");
+        var navLinks = document.querySelector(".nav-links");
+        if (navToggle && navLinks) {
+          navToggle.addEventListener("click", function () {
+            var open = navLinks.classList.toggle("open");
+            navToggle.classList.toggle("open", open);
+            navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+          });
+          navLinks.addEventListener("click", function (e) {
+            if (e.target.tagName === "A" && navLinks.classList.contains("open")) {
+              navLinks.classList.remove("open");
+              navToggle.classList.remove("open");
+              navToggle.setAttribute("aria-expanded", "false");
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

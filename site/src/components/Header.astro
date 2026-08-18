@@ -1,0 +1,47 @@
+---
+import Logo from "./Logo.astro";
+import GitHubIcon from "./GitHubIcon.astro";
+
+const GITHUB = "https://github.com/rezwanvaiya2-0/netlens";
+// On docs pages, anchor links (#features / #install) don't exist — show Home instead.
+const isDocs = Astro.url.pathname.startsWith("/docs");
+---
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="/" aria-label="NetLens home">
+      <Logo size={34} />
+      <span class="brand-text">Net<span class="accent">Lens</span></span>
+    </a>
+
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav-links">
+      {
+        isDocs ? (
+          <a href="/">Home</a>
+        ) : (
+          <>
+            <a href="#features">Features</a>
+            <a href="#install">Installation</a>
+          </>
+        )
+      }
+      <a href="/docs/librenms-integration.html">LibreNMS Integration</a>
+
+      <a class="btn-github" href={GITHUB} target="_blank" rel="noopener">
+        <GitHubIcon size={16} />
+        GitHub
+      </a>
+
+      <button class="theme-toggle" aria-label="Toggle dark mode">
+        <!-- moon -->
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M9.598 1.591a.749.749 0 0 1 .785-.175 7 7 0 1 1-8.967 8.967.75.75 0 0 1 .961-.96 5.5 5.5 0 0 0 7.046-7.046.75.75 0 0 1 .175-.786Zm1.616 1.945a7 7 0 0 1-7.678 7.678 5.5 5.5 0 0 0 7.678-7.678Z"/></svg>
+        <!-- sun -->
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm0-1.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM1.5 8a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5A.75.75 0 0 1 1.5 8Zm10.75.75a.75.75 0 0 1 0-1.5h1.5a.75.75 0 0 1 0 1.5h-1.5ZM8 1.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 8 1.5Zm.75 10.75a.75.75 0 0 1-1.5 0v-1.5a.75.75 0 0 1 1.5 0v1.5ZM3.28 3.28a.75.75 0 0 1 1.06 0l1.06 1.06a.75.75 0 0 1-1.06 1.06L3.28 4.34a.75.75 0 0 1 0-1.06Zm7.32 7.32a.75.75 0 0 1 1.06 0l1.06 1.06a.75.75 0 0 1-1.06 1.06l-1.06-1.06a.75.75 0 0 1 0-1.06Zm0-7.32a.75.75 0 0 1 0 1.06l-1.06 1.06a.75.75 0 0 1-1.06-1.06l1.06-1.06a.75.75 0 0 1 1.06 0Zm-7.32 7.32a.75.75 0 0 1 0 1.06l-1.06 1.06a.75.75 0 0 1-1.06-1.06l1.06-1.06a.75.75 0 0 1 1.06 0Z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>

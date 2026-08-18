@@ -1,0 +1,26 @@
+---
+interface Props {
+  type?: "info" | "warn" | "ok" | "danger";
+  title?: string;
+}
+const { type = "info", title } = Astro.props;
+const labels: Record<string, string> = {
+  info: "Info",
+  warn: "Warning",
+  ok: "Good to know",
+  danger: "Danger zone",
+};
+---
+
+<div class={`callout ${type}`}>
+  <div class="callout-title">
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      {type === "warn" && <path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575L6.457 1.047ZM9 11.5a1 1 0 1 0-2 0 1 1 0 0 0 2 0ZM8 5a.75.75 0 0 0-.75.75V9a.75.75 0 0 0 1.5 0V5.75A.75.75 0 0 0 8 5Z"/>}
+      {type === "danger" && <path d="M2.343 13.657A8 8 0 1 1 13.657 2.343 8 8 0 0 1 2.343 13.657ZM8 7.25a.75.75 0 0 0-.75.75v3a.75.75 0 0 0 1.5 0V8A.75.75 0 0 0 8 7.25ZM8 6.25a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/>}
+      {type === "ok" && <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/>}
+      {(type === "info" || !["warn", "danger", "ok"].includes(type)) && <path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM7.25 5.75a.75.75 0 0 1 1.5 0v3.5a.75.75 0 0 1-1.5 0v-3.5ZM8 11.25a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/>}
+    </svg>
+    {title ?? labels[type]}
+  </div>
+  <slot />
+</div>

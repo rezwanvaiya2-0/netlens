@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Astro dev cache
+.astro/
+
+# Build output (deployed copy lives at the gh-pages branch root)
+dist/
+
+# OS / editor noise
+.DS_Store
+*.local

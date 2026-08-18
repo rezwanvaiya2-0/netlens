@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="NetLens">
+  <defs>
+    <linearGradient id="nl-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#10261a"/>
+      <stop offset="100%" stop-color="#07150d"/>
+    </linearGradient>
+    <linearGradient id="nl-lens" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6CC24A"/>
+      <stop offset="55%" stop-color="#3fb950"/>
+      <stop offset="100%" stop-color="#2dd4bf"/>
+    </linearGradient>
+  </defs>
+  <!-- App-icon squircle -->
+  <rect x="2" y="2" width="44" height="44" rx="13" fill="url(#nl-bg)" stroke="#22352a" stroke-width="1.5"/>
+  <rect x="2" y="2" width="44" height="20" rx="13" fill="#ffffff" opacity="0.045"/>
+
+  <!-- Flow lines (net vibe) passing behind the lens -->
+  <g stroke="url(#nl-lens)" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.85">
+    <path d="M7 15.5 H 41"/>
+    <path d="M7 24 H 41"/>
+    <path d="M7 32.5 H 41"/>
+  </g>
+  <!-- Node dots at line ends -->
+  <g fill="#2dd4bf">
+    <circle cx="41" cy="15.5" r="2.1"/>
+    <circle cx="41" cy="24" r="2.1"/>
+    <circle cx="41" cy="32.5" r="2.1"/>
+  </g>
+
+  <!-- Lens glass (lets the flow lines show through) -->
+  <circle cx="24" cy="24" r="12.5" fill="url(#nl-lens)" opacity="0.10"/>
+  <!-- Lens ring -->
+  <circle cx="24" cy="24" r="12.5" fill="none" stroke="url(#nl-lens)" stroke-width="3"/>
+  <!-- Glare highlight -->
+  <path d="M15.2 18.2 a 12.5 12.5 0 0 1 7.2 -5.2" fill="none" stroke="#ffffff" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+  <!-- Focal dot -->
+  <circle cx="24" cy="24" r="2.4" fill="#ffffff" opacity="0.9"/>
+</svg>
