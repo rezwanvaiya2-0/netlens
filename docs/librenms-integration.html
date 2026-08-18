@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LibreNMS Integration — NetLens Docs</title>
+  <meta name="description" content="How to integrate NetLens (NfSen) with LibreNMS: mount the NfSen data over NFS and view NetFlow statistics inside LibreNMS.">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="../index.html">Net<span>Lens</span></a>
+    <nav class="nav-links">
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#install">Installation</a>
+      <a href="librenms-integration.html">LibreNMS Integration</a>
+      <a href="https://github.com/rezwanvaiya2-0/netlens" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <p class="docs-nav"><a href="../index.html">Home</a> / LibreNMS Integration</p>
+    <h1>Integrating NetLens with LibreNMS</h1>
+    <p class="lead">Connect the NetFlow data collected by NetLens (NfSen) to LibreNMS, so router flow statistics appear inside your LibreNMS device views.</p>
+
+    <div class="note">
+      <strong>Guide coming soon.</strong> This page will be filled with the full step-by-step integration guide — covering the NFS exports, the LibreNMS-side mounts, the RRD links, and the LibreNMS configuration needed to display NetFlow graphs per device.
+    </div>
+
+    <h2>What to expect</h2>
+    <ul class="tick">
+      <li><strong>NFS exports</strong> — sharing <code>nfsen-data</code> and <code>nfsen-stat</code> from the NetLens server to the LibreNMS server</li>
+      <li><strong>LibreNMS mounts</strong> — mounting the shares so LibreNMS can read the raw flows and RRD graphs</li>
+      <li><strong>RRD links</strong> — linking each LibreNMS device to its NfSen profile so the NetFlow tabs appear</li>
+      <li><strong>nfdump on LibreNMS</strong> — installing a matching <code>nfdump</code> version to query the flow data</li>
+      <li><strong>Troubleshooting</strong> — common issues like empty NetFlow tabs and mount problems after a reboot</li>
+    </ul>
+
+    <h2>Prerequisites</h2>
+    <ul class="tick">
+      <li>A running NetLens container (<a href="../index.html#install">installation guide</a>)</li>
+      <li>A LibreNMS installation (on the same or a second server)</li>
+      <li>NFS support on both servers (<code>nfs-kernel-server</code> on the NetLens host, <code>nfs-common</code> on LibreNMS)</li>
+    </ul>
+
+    <div class="note warn">The NetLens Web UI (port 8070) runs on the NetLens server and is password-protected. The LibreNMS integration reads the flow data directly from the NFS shares — it does not log in to the NfSen Web UI.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p><a href="../index.html">Back to NetLens</a> &middot; <a href="https://github.com/rezwanvaiya2-0/netlens" target="_blank" rel="noopener">GitHub repository</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NetLens — Dockerized NfSen NetFlow Analyzer</title>
+  <meta name="description" content="NetLens: Dockerized NfSen + NfDump NetFlow analyzer. Collect, store, and visualize NetFlow data with a password-protected Web UI in one self-contained container.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html">Net<span>Lens</span></a>
+    <nav class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#install">Installation</a>
+      <a href="docs/librenms-integration.html">LibreNMS Integration</a>
+      <a href="https://github.com/rezwanvaiya2-0/netlens" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Net<span>Lens</span></h1>
+    <p class="tagline">A self-contained Docker image that collects, stores, and visualizes NetFlow data — NfSen 1.3.6p1 + NfDump 1.6.17 on Ubuntu 20.04, with a password-protected Web UI.</p>
+    <div class="badges">
+      <img src="https://img.shields.io/badge/NfSen-1.3.6p1-40BC3D" alt="NfSen 1.3.6p1">
+      <img src="https://img.shields.io/badge/NfDump-1.6.17-14b8a6" alt="NfDump 1.6.17">
+      <img src="https://img.shields.io/badge/Ubuntu-20.04-E95420?logo=ubuntu&logoColor=white" alt="Ubuntu 20.04">
+      <img src="https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white" alt="Docker">
+      <img src="https://img.shields.io/badge/Web%20UI-Port%208070-22d3ee" alt="Web UI Port 8070">
+      <img src="https://img.shields.io/badge/NetFlow-UDP%202055%2F2056-6366f1" alt="NetFlow UDP 2055/2056">
+      <img src="https://img.shields.io/badge/License-BSD--3--Clause-40BC3D" alt="License: BSD-3-Clause">
+    </div>
+    <div class="cta">
+      <a class="btn btn-primary" href="#install">Get Started</a>
+      <a class="btn btn-ghost" href="https://github.com/rezwanvaiya2-0/netlens" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <h2>What is NetLens?</h2>
+    <p class="lead">NetLens packages the classic NfSen + NfDump NetFlow analysis stack into a single Docker container, so you get production-grade traffic analysis with one command — no manual compiling, no dependency hell.</p>
+    <div class="cards">
+      <div class="card">
+        <h3>Collect</h3>
+        <p>nfcapd listens on UDP ports 2055/2056 (and any port you add) and captures NetFlow v5/v9/IPFIX from your routers.</p>
+      </div>
+      <div class="card">
+        <h3>Store</h3>
+        <p>Flow data lives in bind-mounted folders next to <code>docker-compose.yml</code> — visible, browsable, and it survives rebuilds.</p>
+      </div>
+      <div class="card">
+        <h3>Visualize</h3>
+        <p>The Web UI (port 8070) turns raw flows into RRD graphs — traffic, flows, and packets per source, with a styled login page.</p>
+      </div>
+      <div class="card">
+        <h3>Retain</h3>
+        <p>Set Expire / Max size per profile from the Web UI. The nfsend daemon enforces it automatically — no cron, no config edits.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="install">
+  <div class="container">
+    <h2>Installation</h2>
+    <p class="lead">Up and running in three commands. Needs a VPS or server with Docker (Compose v2) and a few minutes of build time on first install.</p>
+
+    <h3>Quick start</h3>
+    <pre><code><span class="c"># 1. Clone the repository</span>
+git clone https://github.com/rezwanvaiya2-0/netlens.git
+cd netlens
+
+<span class="c"># 2. Build &amp; start (same as: docker compose up -d --build)</span>
+sudo ./install.sh</code></pre>
+
+    <div class="note ok">The <code>--build</code> flag is only needed on the first run. After that, <code>docker compose up -d</code> starts the container in seconds — your sources, config, and data persist in the folders next to <code>docker-compose.yml</code>.</div>
+
+    <h3>Access the Web UI</h3>
+    <p>Open <code>http://&lt;YOUR_IP&gt;:8070/nfsen.php</code> in your browser.</p>
+    <p>The UI is password-protected. First login:</p>
+    <table>
+      <tr><th>Username</th><td><code>admin</code></td></tr>
+      <tr><th>Password</th><td><code>change-me-now</code></td></tr>
+    </table>
+    <div class="note warn"><strong>Change the password immediately</strong> — one command, takes effect instantly, no restart needed:</div>
+    <pre><code>docker exec netlens htpasswd -b /var/nfsen/etc/.htpasswd admin YourNewPass123</code></pre>
+
+    <h3>Data folders</h3>
+    <p>Your data lives in 4 real folders next to <code>docker-compose.yml</code> — no hidden Docker volumes:</p>
+    <table>
+      <tr><th>Folder</th><th>Inside the container</th><th>Holds</th></tr>
+      <tr><td><code>nfsen-data/</code></td><td><code>/var/nfsen/profiles-data</code></td><td>Raw NetFlow capture files</td></tr>
+      <tr><td><code>nfsen-stat/</code></td><td><code>/var/nfsen/profiles-stat</code></td><td>RRD graph files (the charts)</td></tr>
+      <tr><td><code>nfsen-var/</code></td><td><code>/var/nfsen/var</code></td><td>Logs, cache, runtime files</td></tr>
+      <tr><td><code>nfsen-etc/</code></td><td><code>/var/nfsen/etc</code></td><td><code>nfsen.conf</code> (router sources)</td></tr>
+    </table>
+    <ul class="tick">
+      <li><strong>Back up anytime:</strong> <code>tar czf nfsen-backup.tar.gz nfsen-data nfsen-stat nfsen-var nfsen-etc</code></li>
+      <li><strong>Data survives everything</strong> — rebuilds, restarts, even <code>docker compose down -v</code></li>
+      <li><strong>Only <code>rm -rf</code> on the folders themselves</strong> deletes data (stop the container first)</li>
+    </ul>
+
+    <h3>Connect a router</h3>
+    <p>UDP ports <code>2055</code> and <code>2056</code> are pre-opened, with a demo <code>router1</code> source so the UI shows graphs on first install. To add a router on a new port:</p>
+    <pre><code><span class="c"># 1. Open the port in docker-compose.yml under ports:</span>
+<span class="c">#    - "2070:2070/udp"</span>
+
+<span class="c"># 2. Add the router source (persists forever)</span>
+docker exec netlens bash -c "sed -i \"/^);$/i\\    'myrouter' =&gt; { 'port' =&gt; '2070', 'col' =&gt; '#FF0000', 'type' =&gt; 'netflow' },\" /var/nfsen/etc/nfsen.conf && /var/nfsen/bin/nfsen reconfig"
+
+<span class="c"># 3. Recreate the container (~3 seconds, no rebuild, no data loss)</span>
+docker compose up -d</code></pre>
+
+    <h3>Set data retention</h3>
+    <p>From the Web UI: <strong>Profile Admin &rarr; live profile &rarr; Edit</strong>. Set <strong>Expire</strong> (max age, e.g. <code>3d</code>) and <strong>Max size</strong> (hard disk cap, e.g. <code>44G</code>), then Save. The daemon enforces it automatically within minutes.</p>
+  </div>
+</section>
+
+<section id="docs">
+  <div class="container">
+    <h2>Documentation</h2>
+    <p class="lead">Guides for going beyond the basics.</p>
+    <div class="cards">
+      <div class="card">
+        <h3><a href="docs/librenms-integration.html">LibreNMS Integration</a></h3>
+        <p>How to integrate NetLens (NfSen) with LibreNMS — mounting the flow data over NFS and viewing NetFlow stats inside LibreNMS.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/rezwanvaiya2-0/netlens/blob/main/README.md" target="_blank" rel="noopener">README (full reference)</a></h3>
+        <p>Complete documentation: router sources, retention, password protection, security, storage recovery, and troubleshooting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>NetLens is a Dockerized packaging of <a href="https://sourceforge.net/projects/nfsen/" target="_blank" rel="noopener">NfSen</a> and <a href="https://github.com/phaag/nfdump" target="_blank" rel="noopener">NfDump</a> — all credit for the NetFlow analysis goes to those projects. Licensed under <a href="https://github.com/rezwanvaiya2-0/netlens/blob/main/LICENSE" target="_blank" rel="noopener">BSD-3-Clause</a>.</p>
+    <p style="margin-top:8px"><a href="https://github.com/rezwanvaiya2-0/netlens" target="_blank" rel="noopener">GitHub repository</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
