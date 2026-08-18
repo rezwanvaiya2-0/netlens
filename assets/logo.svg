@@ -1,29 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 64" role="img" aria-label="NetLens">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 72" role="img" aria-label="NetLens">
   <defs>
+    <linearGradient id="nl-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2f6b2f"/>
+      <stop offset="100%" stop-color="#0e3a1e"/>
+    </linearGradient>
     <linearGradient id="nl-lens" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0969da"/>
-      <stop offset="100%" stop-color="#8250df"/>
+      <stop offset="0%" stop-color="#6CC24A"/>
+      <stop offset="100%" stop-color="#3fb950"/>
     </linearGradient>
     <linearGradient id="nl-text" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#0969da"/>
-      <stop offset="100%" stop-color="#8250df"/>
+      <stop offset="0%" stop-color="#6CC24A"/>
+      <stop offset="100%" stop-color="#3fb950"/>
     </linearGradient>
   </defs>
 
+  <!-- Squircle app icon (macOS style) -->
+  <rect x="4" y="4" width="64" height="64" rx="15" fill="url(#nl-bg)" stroke="#3a5a3a" stroke-width="1.5"/>
+  <!-- Subtle top highlight -->
+  <rect x="4" y="4" width="64" height="30" rx="15" fill="rgba(255,255,255,0.06)"/>
+
   <!-- Lens ring -->
-  <circle cx="32" cy="32" r="26" fill="none" stroke="url(#nl-lens)" stroke-width="5"/>
-  <!-- Lens inner -->
-  <circle cx="32" cy="32" r="14" fill="none" stroke="url(#nl-lens)" stroke-width="2.5" opacity="0.55"/>
-  <!-- Flow line left -->
-  <line x1="1" y1="32" x2="14" y2="32" stroke="url(#nl-lens)" stroke-width="4" stroke-linecap="round"/>
-  <!-- Flow line right -->
-  <line x1="50" y1="32" x2="63" y2="32" stroke="url(#nl-lens)" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="36" cy="36" r="20" fill="none" stroke="url(#nl-lens)" stroke-width="4.5"/>
+  <circle cx="36" cy="36" r="10.5" fill="none" stroke="url(#nl-lens)" stroke-width="2" opacity="0.6"/>
+  <!-- Lens glare -->
+  <ellipse cx="30" cy="29" rx="5" ry="3" fill="rgba(255,255,255,0.25)" transform="rotate(-35 30 29)"/>
+  <!-- Flow line through lens -->
+  <line x1="8" y1="36" x2="18" y2="36" stroke="url(#nl-lens)" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="54" y1="36" x2="64" y2="36" stroke="url(#nl-lens)" stroke-width="3.5" stroke-linecap="round"/>
   <!-- Flow dots -->
-  <circle cx="20" cy="32" r="3.5" fill="#0969da"/>
-  <circle cx="32" cy="32" r="3.5" fill="#8250df"/>
-  <circle cx="44" cy="32" r="3.5" fill="#0969da"/>
+  <circle cx="26" cy="36" r="2.6" fill="#6CC24A"/>
+  <circle cx="36" cy="36" r="2.6" fill="#a5d6a5"/>
+  <circle cx="46" cy="36" r="2.6" fill="#6CC24A"/>
 
   <!-- Wordmark -->
-  <text x="78" y="41" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="0.5" fill="#1f2328">Net</text>
-  <text x="148" y="41" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="0.5" fill="url(#nl-text)">Lens</text>
+  <text x="88" y="46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="36" font-weight="800" letter-spacing="0.5" fill="#e6edf3">Net</text>
+  <text x="160" y="46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="36" font-weight="800" letter-spacing="0.5" fill="url(#nl-text)">Lens</text>
 </svg>
