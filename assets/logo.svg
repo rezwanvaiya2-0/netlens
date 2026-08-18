@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 64" role="img" aria-label="NetLens">
   <defs>
     <linearGradient id="nl-lens" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#22d3ee"/>
-      <stop offset="100%" stop-color="#6366f1"/>
+      <stop offset="0%" stop-color="#0969da"/>
+      <stop offset="100%" stop-color="#8250df"/>
     </linearGradient>
     <linearGradient id="nl-text" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#22d3ee"/>
-      <stop offset="100%" stop-color="#6366f1"/>
+      <stop offset="0%" stop-color="#0969da"/>
+      <stop offset="100%" stop-color="#8250df"/>
     </linearGradient>
   </defs>
 
@@ -19,11 +19,11 @@
   <!-- Flow line right -->
   <line x1="50" y1="32" x2="63" y2="32" stroke="url(#nl-lens)" stroke-width="4" stroke-linecap="round"/>
   <!-- Flow dots -->
-  <circle cx="20" cy="32" r="3.5" fill="#22d3ee"/>
-  <circle cx="32" cy="32" r="3.5" fill="#6366f1"/>
-  <circle cx="44" cy="32" r="3.5" fill="#22d3ee"/>
+  <circle cx="20" cy="32" r="3.5" fill="#0969da"/>
+  <circle cx="32" cy="32" r="3.5" fill="#8250df"/>
+  <circle cx="44" cy="32" r="3.5" fill="#0969da"/>
 
   <!-- Wordmark -->
-  <text x="78" y="41" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="0.5" fill="#e2e8f0">Net</text>
+  <text x="78" y="41" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="0.5" fill="#1f2328">Net</text>
   <text x="148" y="41" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="0.5" fill="url(#nl-text)">Lens</text>
 </svg>

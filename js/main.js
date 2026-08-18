@@ -1,25 +1,77 @@
-/* NetLens site — mobile nav toggle + docs scroll-spy */
+/* NetLens site — copy-to-clipboard, mobile nav, docs scroll-spy */
 (function () {
   "use strict";
 
-  /* Mobile hamburger nav */
+  /* ---------------------------------------------------------------
+     Copy-to-clipboard on every code block
+     --------------------------------------------------------------- */
+  function addCopyButtons() {
+    var blocks = document.querySelectorAll(".code-block pre");
+    blocks.forEach(function (pre) {
+      if (pre.closest(".terminal-body")) return; /* hero terminal handled separately */
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "copy-btn";
+      btn.innerHTML =
+        '<svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5Z"/><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25v-7.5Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25h-7.5Z"/></svg><span>Copy</span>';
+      btn.addEventListener("click", function () {
+        var text = pre.innerText;
+        copyText(text, btn);
+      });
+      pre.parentNode.appendChild(btn);
+    });
+  }
+
+  function copyText(text, btn) {
+    var done = function () {
+      btn.classList.add("copied");
+      btn.querySelector("span").textContent = "Copied!";
+      setTimeout(function () {
+        btn.classList.remove("copied");
+        btn.querySelector("span").textContent = "Copy";
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
+    } else {
+      fallbackCopy(text, done);
+    }
+  }
+
+  function fallbackCopy(text, done) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); done(); } catch (e) { /* ignore */ }
+    document.body.removeChild(ta);
+  }
+
+  /* ---------------------------------------------------------------
+     Mobile hamburger nav
+     --------------------------------------------------------------- */
   var toggle = document.querySelector(".nav-toggle");
   var links = document.querySelector(".nav-links");
   if (toggle && links) {
     toggle.addEventListener("click", function () {
       var open = links.classList.toggle("open");
       toggle.classList.toggle("open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
     });
-    /* Close the menu when a link is tapped (mobile) */
     links.addEventListener("click", function (e) {
       if (e.target.tagName === "A" && links.classList.contains("open")) {
         links.classList.remove("open");
         toggle.classList.remove("open");
+        toggle.setAttribute("aria-expanded", "false");
       }
     });
   }
 
-  /* Docs page: scroll-spy for the table of contents */
+  /* ---------------------------------------------------------------
+     Docs page: scroll-spy for the table of contents
+     --------------------------------------------------------------- */
   var tocLinks = document.querySelectorAll(".docs-toc a[href^='#']");
   if (tocLinks.length) {
     var headings = [];
@@ -30,7 +82,7 @@
     });
 
     function onScroll() {
-      var pos = window.scrollY + 120;
+      var pos = window.scrollY + 140;
       var current = null;
       headings.forEach(function (h) {
         if (h.el.offsetTop <= pos) current = h;
@@ -42,4 +94,6 @@
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
   }
+
+  addCopyButtons();
 })();

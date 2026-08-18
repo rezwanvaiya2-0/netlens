@@ -20,10 +20,12 @@
     </button>
     <nav class="nav-links">
       <a href="../index.html#features">Features</a>
-      <a href="../index.html#how-it-works">How it works</a>
       <a href="../index.html#install">Installation</a>
       <a href="librenms-integration.html">LibreNMS Integration</a>
-      <a class="nav-cta" href="https://github.com/rezwanvaiya2-0/netlens" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-sm btn-outline" href="https://github.com/rezwanvaiya2-0/netlens" target="_blank" rel="noopener">
+        <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8 0 3.54-2.29 6.53-5.47 7.59.4-.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        GitHub
+      </a>
     </nav>
   </div>
 </header>
@@ -68,17 +70,18 @@
         </ol>
         <p>When LibreNMS runs on a different machine (your case), the cleanest way to give it items 1 and 2 is an <strong>NFS read-only share</strong> of the two data folders.</p>
 
-        <div class="note"><strong>TL;DR — the 30-second version:</strong></div>
+        <div class="note info"><strong>TL;DR — the 30-second version:</strong></div>
         <ol class="steps">
           <li>NfSen (Docker) stays on the VPS and keeps writing to its local folders — we never let another writer touch the live data.</li>
           <li>Share <strong>only</strong> two folders over NFS, read-only: <code>nfsen-data/</code> (raw flow files) and <code>nfsen-stat/</code> (RRD graphs).</li>
-          <li>Install <code>nfdump 1.6.25</code> on the LibreNMS server to match the container's v1.6 file format (see section 4 for why not 1.7.3 or 1.6.17).</li>
+          <li>Install <code>nfdump 1.6.25</code> on the LibreNMS server to match the container's v1.6 file format (see section 5 for why not 1.7.3 or 1.6.17).</li>
           <li>Tell LibreNMS where the data is (<code>lnms config:set</code>) — the <strong>Netflow</strong> tab appears on every device page.</li>
           <li><strong>Never</strong> run two NfSen instances writing to the same shared folder. Ever.</li>
         </ol>
 
         <h2 id="architecture">2. Architecture</h2>
-        <pre><code>   Your VPS (Docker NetLens)                  LibreNMS server
+        <div class="code-block">
+          <pre><code>   Your VPS (Docker NetLens)                  LibreNMS server
    ---------------------------                -----------------
    docker-compose.yml                          LibreNMS web UI
    |-- nfsen-data/  = profiles-data --NFS(ro)-->  /var/nfsen/profiles-data
@@ -89,25 +92,34 @@
    NfSen writes here          |        LibreNMS READS here (never writes)
    (one writer only)          |        nfdump (1.6.25) reads the flow files
                               v        RRD files render the channel graphs</code></pre>
+        </div>
         <div class="note warn"><strong>Rule:</strong> NFS share = READ-ONLY for the LibreNMS server. NfSen never reads back from it. This is the "one writer" rule — it can never corrupt data.</div>
 
         <h2 id="nfs-server">3. NFS server setup (on the VPS running NetLens)</h2>
 
         <h3>Step 1 — Install the NFS server</h3>
-        <pre><code>sudo apt update
+        <div class="code-block">
+          <pre><code>sudo apt update
 sudo apt install -y nfs-kernel-server</code></pre>
+        </div>
 
         <h3>Step 2 — Find your project path</h3>
-        <pre><code>cd /path/to/netlens      <span class="c"># where nfsen-data/ and nfsen-stat/ live (e.g. /root/netlens)</span>
+        <div class="code-block">
+          <pre><code>cd /path/to/netlens      <span class="c"># where nfsen-data/ and nfsen-stat/ live (e.g. /root/netlens)</span>
 pwd                      <span class="c"># remember this as &lt;VPS_PROJECT_PATH&gt;</span></code></pre>
+        </div>
 
         <h3>Step 3 — Add the exports</h3>
         <p>Edit <code>/etc/exports</code> and add (replace the IP and path):</p>
-        <pre><code>&lt;VPS_PROJECT_PATH&gt;/nfsen-data  &lt;LibreNMS_IP&gt;/32(ro,sync,no_subtree_check)
+        <div class="code-block">
+          <pre><code>&lt;VPS_PROJECT_PATH&gt;/nfsen-data  &lt;LibreNMS_IP&gt;/32(ro,sync,no_subtree_check)
 &lt;VPS_PROJECT_PATH&gt;/nfsen-stat  &lt;LibreNMS_IP&gt;/32(ro,sync,no_subtree_check)</code></pre>
+        </div>
         <p>Example (LibreNMS server = <code>192.168.1.50</code>, project in <code>/root/netlens</code>):</p>
-        <pre><code>/root/netlens/nfsen-data  192.168.1.50/32(ro,sync,no_subtree_check)
+        <div class="code-block">
+          <pre><code>/root/netlens/nfsen-data  192.168.1.50/32(ro,sync,no_subtree_check)
 /root/netlens/nfsen-stat  192.168.1.50/32(ro,sync,no_subtree_check)</code></pre>
+        </div>
         <ul class="tick">
           <li><strong><code>ro</code></strong> = read-only (recommended; the LibreNMS server only needs to read).</li>
           <li>We deliberately <strong>do not export</strong> <code>nfsen-var/</code> or <code>nfsen-etc/</code> — <code>nfsen-etc</code> contains <code>.htpasswd</code> (your Web UI password hashes).</li>
@@ -115,39 +127,53 @@ pwd                      <span class="c"># remember this as &lt;VPS_PROJECT_PATH
         </ul>
 
         <h3>Step 4 — Activate and verify</h3>
-        <pre><code>sudo exportfs -rav
+        <div class="code-block">
+          <pre><code>sudo exportfs -rav
 sudo systemctl enable --now nfs-server
 sudo showmount -e localhost        <span class="c"># you should see the 2 exports</span></code></pre>
+        </div>
 
         <h3>Step 5 — Firewall (cloud VPS + ufw)</h3>
         <p>Allow NFS from the LibreNMS IP:</p>
-        <pre><code>sudo ufw allow from 103.159.37.199 to any port 111 proto tcp
+        <div class="code-block">
+          <pre><code>sudo ufw allow from 103.159.37.199 to any port 111 proto tcp
 sudo ufw allow from 103.159.37.199 to any port 2049 proto tcp
 sudo ufw allow from 103.159.37.199 to any port 111 proto udp
 sudo ufw allow from 103.159.37.199 to any port 2049 proto udp</code></pre>
+        </div>
         <div class="note">On some cloud providers NFS also uses the rpcbind range <code>20048+</code> etc. If mounting fails, temporarily disable ufw to test, then open the ports the error mentions.</div>
 
         <h2 id="nfs-client">4. NFS client setup (on the LibreNMS server)</h2>
 
         <h3>Step 1 — Install the NFS client</h3>
-        <pre><code>sudo apt update
+        <div class="code-block">
+          <pre><code>sudo apt update
 sudo apt install -y nfs-common</code></pre>
+        </div>
 
         <h3>Step 2 — Create the mount points</h3>
         <p><strong>Important:</strong> use the <em>same paths</em> LibreNMS expects, so no symlinks are needed:</p>
-        <pre><code>sudo mkdir -p /var/nfsen/profiles-data /var/nfsen/profiles-stat</code></pre>
+        <div class="code-block">
+          <pre><code>sudo mkdir -p /var/nfsen/profiles-data /var/nfsen/profiles-stat</code></pre>
+        </div>
 
         <h3>Step 3 — Mount (replace &lt;VPS_IP&gt; and the project path)</h3>
-        <pre><code>sudo mount -t nfs4 &lt;VPS_IP&gt;:&lt;VPS_PROJECT_PATH&gt;/nfsen-data /var/nfsen/profiles-data
+        <div class="code-block">
+          <pre><code>sudo mount -t nfs4 &lt;VPS_IP&gt;:&lt;VPS_PROJECT_PATH&gt;/nfsen-data /var/nfsen/profiles-data
 sudo mount -t nfs4 &lt;VPS_IP&gt;:&lt;VPS_PROJECT_PATH&gt;/nfsen-stat /var/nfsen/profiles-stat</code></pre>
+        </div>
         <p>Example:</p>
-        <pre><code>sudo mount -t nfs4 103.187.23.163:/root/netlens/nfsen-data /var/nfsen/profiles-data
+        <div class="code-block">
+          <pre><code>sudo mount -t nfs4 103.187.23.163:/root/netlens/nfsen-data /var/nfsen/profiles-data
 sudo mount -t nfs4 103.187.23.163:/root/netlens/nfsen-stat /var/nfsen/profiles-stat</code></pre>
+        </div>
 
         <h3>Step 4 — Make it permanent (/etc/fstab)</h3>
         <p>Append these <strong>two</strong> lines (each has exactly 6 fields: device, mountpoint, fstype, options, dump, pass):</p>
-        <pre><code>&lt;VPS_IP&gt;:&lt;VPS_PROJECT_PATH&gt;/nfsen-data  /var/nfsen/profiles-data  nfs4  ro,soft,timeo=50,retrans=2,_netdev 0 0
+        <div class="code-block">
+          <pre><code>&lt;VPS_IP&gt;:&lt;VPS_PROJECT_PATH&gt;/nfsen-data  /var/nfsen/profiles-data  nfs4  ro,soft,timeo=50,retrans=2,_netdev 0 0
 &lt;VPS_IP&gt;:&lt;VPS_PROJECT_PATH&gt;/nfsen-stat  /var/nfsen/profiles-stat  nfs4  ro,soft,timeo=50,retrans=2,_netdev 0 0</code></pre>
+        </div>
         <p>(<code>ro + soft</code> = safe for a monitoring box: if NFS hiccups, LibreNMS just shows "no data" instead of hanging forever. <code>_netdev</code> tells systemd to wait for the network before mounting at boot.)</p>
 
         <div class="note danger"><strong>Gotchas (all bit us in production):</strong>
@@ -159,8 +185,10 @@ sudo mount -t nfs4 103.187.23.163:/root/netlens/nfsen-stat /var/nfsen/profiles-s
         </div>
 
         <h3>Step 5 — Verify you can see the data</h3>
-        <pre><code>ls /var/nfsen/profiles-data/live/        <span class="c"># should list your sources, e.g. router1</span>
+        <div class="code-block">
+          <pre><code>ls /var/nfsen/profiles-data/live/        <span class="c"># should list your sources, e.g. router1</span>
 ls /var/nfsen/profiles-stat/live/        <span class="c"># should list .rrd files</span></code></pre>
+        </div>
 
         <h2 id="nfdump">5. Install nfdump on the LibreNMS server (important version rule)</h2>
         <p>LibreNMS runs <code>nfdump</code> against your flow files. The file format <strong>must match</strong> the container's nfdump, otherwise LibreNMS cannot read anything:</p>
@@ -170,32 +198,42 @@ ls /var/nfsen/profiles-stat/live/        <span class="c"># should list .rrd file
           <li>Your LibreNMS is Ubuntu 24.04: the default package there is <strong>nfdump 1.7.3 = WRONG</strong>. Do not use it.</li>
           <li>Ubuntu 20.04's apt package is nfdump 1.6.17 = perfect match (only relevant if you ever run LibreNMS on 20.04).</li>
         </ul>
-        <div class="note warn"><strong>Important — do not use 1.6.17 on 24.04.</strong> Its argument/range parsing has a stack buffer overflow that Ubuntu 24.04's newer glibc/GCC catches at runtime: <code>nfdump -M ... -R .</code> dies with <code>"*** buffer overflow detected ***"</code>. <strong>1.6.25</strong> is the last release of the 1.6.x tree — same v1.6 file format as the container's 1.6.17, but with years of bug fixes. Build it from source.</div>
+        <div class="note warn"><strong>Important — do not use 1.6.17 on 24.04.</strong> Its argument/range parsing has a stack buffer overflow that Ubuntu 24.04's newer glibc/GCC catches at runtime: <code>nfdump -M ... -R .</code> dies with <code>"*** buffer overflow detected ***"</code>. <strong>1.6.25</strong> is the last release of the 1.6.x tree — same v1.6 file format as the container's 1.6.17, but with years of bug fixes. Build it from source:</div>
 
         <h3>Step 1 — Install the build dependencies</h3>
-        <pre><code>sudo apt update
+        <div class="code-block">
+          <pre><code>sudo apt update
 sudo apt install -y build-essential autoconf automake libtool pkg-config \
   flex bison byacc libpcap-dev libbz2-dev</code></pre>
+        </div>
 
         <h3>Step 2 — Download and extract the 1.6.25 source</h3>
-        <pre><code>cd /tmp
+        <div class="code-block">
+          <pre><code>cd /tmp
 wget https://github.com/phaag/nfdump/archive/v1.6.25.tar.gz
 tar xzf v1.6.25.tar.gz
 cd nfdump-1.6.25</code></pre>
+        </div>
 
         <h3>Step 3 — Build and install (same configure family the Dockerfile uses)</h3>
-        <pre><code>sh ./autogen.sh
+        <div class="code-block">
+          <pre><code>sh ./autogen.sh
 ./configure --prefix=/usr/local
 make -j"$(nproc)"
 sudo make install
 sudo ldconfig</code></pre>
+        </div>
 
         <h3>Step 4 — Verify the version</h3>
-        <pre><code>/usr/local/bin/nfdump -V     <span class="c"># must show: Version: 1.6.25</span></code></pre>
+        <div class="code-block">
+          <pre><code>/usr/local/bin/nfdump -V     <span class="c"># must show: Version: 1.6.25</span></code></pre>
+        </div>
         <p>(Ignore any <code>/usr/bin/nfdump 1.7.3</code> that apt left behind — LibreNMS will be pointed at <code>/usr/local/bin/nfdump</code>, section 6.)</p>
 
         <h3>Step 5 — Quick read test (should print flow stats, not an error)</h3>
-        <pre><code>/usr/local/bin/nfdump -M /var/nfsen/profiles-data/live/router1 -R . -s record/flows | tail -5</code></pre>
+        <div class="code-block">
+          <pre><code>/usr/local/bin/nfdump -M /var/nfsen/profiles-data/live/router1 -R . -s record/flows | tail -5</code></pre>
+        </div>
         <ul class="tick">
           <li>The <code>-M</code> argument is the <strong>full path</strong> to the source directory (<code>&lt;base&gt;/profiles-data/live/&lt;source&gt;</code>).</li>
           <li><code>-R</code> selects the time range. <code>.</code> = all files. Without <code>-R</code>, nfdump refuses with: <code>"-M needs either -r or -R to specify the file or file list."</code></li>
@@ -207,7 +245,8 @@ sudo ldconfig</code></pre>
         <h2 id="configure-librenms">6. Configure LibreNMS</h2>
 
         <h3>Step 1 — Run these as the librenms user (or with sudo -u librenms)</h3>
-        <pre><code>lnms config:set nfsen_enable true
+        <div class="code-block">
+          <pre><code>lnms config:set nfsen_enable true
 lnms config:set nfsen_split_char '_'
 lnms config:set nfsen_base.+ '/var/nfsen/'
 lnms config:set nfsen_rrds.+ '/var/nfsen/profiles-stat/live/'
@@ -222,6 +261,7 @@ lnms config:set nfsen_suffix '_none'   <span class="c"># REQUIRED, never leave e
                                          # empty suffix = empty regex = NULL = the RRD check
                                          # always fails = Netflow tab never appears. Use any
                                          # string that never occurs in device hostnames.</span></code></pre>
+        </div>
         <div class="note">If your device hostnames include your domain, use the real domain suffix instead of <code>_none</code> (the LibreNMS docs' trick): <code>lnms config:set nfsen_suffix '_yourdomain_com'</code>. Whatever you choose, the value <strong>must be non-empty</strong> — empty = no Netflow tab.</div>
 
         <h3>Step 2 — Find the tab</h3>
@@ -234,11 +274,13 @@ lnms config:set nfsen_suffix '_none'   <span class="c"># REQUIRED, never leave e
         <p>Stats (Top N) use <code>nfdump</code> → your NFS data. Graphs use the RRDs. Note: the <strong>General</strong> view can look empty (it looks for per-channel subfolders this NfSen doesn't create) — the <strong>Stats</strong> view is the one with your flow data.</p>
 
         <p>Tuning knobs (optional, all documented in LibreNMS):</p>
-        <pre><code>lnms config:set nfsen_last_default 900
+        <div class="code-block">
+          <pre><code>lnms config:set nfsen_last_default 900
 lnms config:set nfsen_top_default 20
 lnms config:set nfsen_stats_default srcip
 lnms config:set nfsen_order_default packets
 lnms config:set nfsen_last_max 153600      <span class="c"># max seconds for stats</span></code></pre>
+        </div>
 
         <h2 id="matching-names">7. Matching NfSen sources to LibreNMS devices (the common gotcha)</h2>
         <p>LibreNMS finds a device's flow data <strong>by name</strong>. The NfSen source (ident) name becomes the RRD filename <em>and</em> the directory name under <code>profiles-data/live/</code>.</p>
@@ -250,24 +292,31 @@ lnms config:set nfsen_last_max 153600      <span class="c"># max seconds for sta
         <h3>Devices added by IP — use symlinks</h3>
         <p>If your device is added by IP in LibreNMS: create <strong>symbolic links</strong> so the IP-based names resolve to the real source. You need <strong>two</strong> — one for the RRD graphs and one for the raw flow data (nfdump stats use it too).</p>
         <div class="note warn"><strong>Important:</strong> the NFS exports are <strong>read-only</strong> (<code>ro</code>), so you <strong>cannot</strong> create symlinks on the LibreNMS server — the mount rejects writes. Create them on the VPS instead (inside the project folders, next to <code>docker-compose.yml</code> — they show up on the LibreNMS side through NFS):</div>
-        <pre><code><span class="c"># on the VPS (NfSen host), inside the project folder:</span>
+        <div class="code-block">
+          <pre><code><span class="c"># on the VPS (NfSen host), inside the project folder:</span>
 cd /path/to/netlens/nfsen-stat/live
 sudo ln -s router1.rrd 192_168_1_50.rrd     <span class="c"># &lt;deviceIP with _ &gt;.rrd</span>
 
 cd /path/to/netlens/nfsen-data/live
 sudo ln -s router1 192_168_1_50             <span class="c"># data dir for nfdump stats</span></code></pre>
+        </div>
         <p>(Replace <code>router1</code> with the real source that collects that router's traffic, and <code>192_168_1_50</code> with the LibreNMS device hostname/IP with <code>.</code> replaced by <code>nfsen_split_char</code>, i.e. <code>_</code>.)</p>
         <div class="note danger"><strong>Use the device's actual hostname</strong> as LibreNMS stores it (see the Devices list, or the poll log lines like <code>"device:poll 192.168.1.50"</code>). A symlink with the wrong name means the Netflow tab never appears — the name must match exactly, e.g. a device polled as <code>103.187.22.1</code> needs <code>103_187_22_1.rrd</code>.</div>
 
         <p>On the NfSen side, when you add a real source in <code>nfsen.conf</code>, name it to match (see the project README for adding sources):</p>
-        <pre><code>'core_router_example_com' =&gt; { 'port' =&gt; '2070', 'col' =&gt; '#FF0000', 'type' =&gt; 'netflow' },</code></pre>
+        <div class="code-block">
+          <pre><code>'core_router_example_com' =&gt; { 'port' =&gt; '2070', 'col' =&gt; '#FF0000', 'type' =&gt; 'netflow' },</code></pre>
+        </div>
 
         <h2 id="verify">8. Verification checklist</h2>
         <p><strong>On the VPS (NetLens/NfSen):</strong></p>
-        <pre><code>sudo showmount -e localhost
+        <div class="code-block">
+          <pre><code>sudo showmount -e localhost
 ls -la nfsen-data/live/ nfsen-stat/live/</code></pre>
+        </div>
         <p><strong>On the LibreNMS server:</strong></p>
-        <pre><code>df -h | grep nfsen                    <span class="c"># mounts are up</span>
+        <div class="code-block">
+          <pre><code>df -h | grep nfsen                    <span class="c"># mounts are up</span>
 ls /var/nfsen/profiles-data/live/     <span class="c"># sources + any IP symlinks</span>
 ls /var/nfsen/profiles-stat/live/     <span class="c"># .rrd files + any IP symlinks</span>
 /usr/local/bin/nfdump -V              <span class="c"># must be 1.6.25</span>
@@ -277,6 +326,7 @@ lnms config:get nfsen_suffix          <span class="c"># must NOT be empty</span>
 lnms config:get nfsen_subdirlayout    <span class="c"># must be 0 (flat file layout)</span>
 lnms config:get nfsen_rrds            <span class="c"># must list the profiles-stat paths</span>
 sudo -u librenms ./validate.php        <span class="c"># LibreNMS self-check (in its install dir)</span></code></pre>
+        </div>
         <p><strong>In the browser:</strong> Device page → tab bar (at the end of it) → <strong>Netflow</strong> → Stats view shows Top-N. Direct URL test: <code>http://&lt;librenms&gt;/device/device=&lt;id&gt;/tab=netflow/</code></p>
         <div class="note">If the tab is missing: run <code>sudo tail -n 50 /opt/librenms/logs/librenms.log</code> and check, in order: <code>nfsen_enable</code> true? <code>nfsen_suffix</code> non-empty? RRD file name matches the device's real hostname (section 7)? The tab only appears when all three are true.</div>
 

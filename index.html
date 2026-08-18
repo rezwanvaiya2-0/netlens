@@ -20,10 +20,12 @@
     </button>
     <nav class="nav-links">
       <a href="#features">Features</a>
-      <a href="#how-it-works">How it works</a>
       <a href="#install">Installation</a>
       <a href="docs/librenms-integration.html">LibreNMS Integration</a>
-      <a class="nav-cta" href="https://github.com/rezwanvaiya2-0/netlens" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-sm btn-outline" href="https://github.com/rezwanvaiya2-0/netlens" target="_blank" rel="noopener">
+        <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8 0 3.54-2.29 6.53-5.47 7.59.4-.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        GitHub
+      </a>
     </nav>
   </div>
 </header>
@@ -33,20 +35,42 @@
     <div class="hero-logo">
       <img src="assets/logo.svg" alt="NetLens">
     </div>
-    <h1>See your network <span>flows</span> clearly.</h1>
-    <p class="tagline">NetLens is a self-contained Docker image for NetFlow analysis — NfSen 1.3.6p1 + NfDump 1.6.17 on Ubuntu 20.04, with a password-protected Web UI. Collect, store, and visualize router traffic with one command.</p>
-    <div class="badges">
-      <img src="https://img.shields.io/badge/NfSen-1.3.6p1-40BC3D" alt="NfSen 1.3.6p1">
-      <img src="https://img.shields.io/badge/NfDump-1.6.17-14b8a6" alt="NfDump 1.6.17">
+    <h1>See your network <span>flows</span> clearly</h1>
+    <p class="tagline">A self-contained Docker image for NetFlow analysis — NfSen 1.3.6p1 + NfDump 1.6.17 with a password-protected Web UI. Collect, store, and visualize router traffic with one command.</p>
+
+    <!-- Centered install command -->
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="t-title">bash</span>
+      </div>
+      <div class="terminal-body">
+        <pre><code><span class="comment"># Install NetLens on your VPS</span>
+<span class="prompt">$</span> git clone https://github.com/rezwanvaiya2-0/netlens.git
+<span class="prompt">$</span> cd netlens
+<span class="prompt">$</span> sudo ./install.sh</code></pre>
+      </div>
+    </div>
+
+    <div class="cta" style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:26px;">
+      <a class="btn btn-primary" href="#install">
+        <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25V2.75A1.75 1.75 0 0 0 14.25 1H1.75ZM1.5 2.75c0-.138.112-.25.25-.25h12.5c.138 0 .25.112.25.25v10.5a.25.25 0 0 1-.25.25H1.75a.25.25 0 0 1-.25-.25V2.75Z"/><path d="M7.25 4.5a.75.75 0 0 1 .75.75v2.5h2.5a.75.75 0 0 1 0 1.5H8v2.5a.75.75 0 0 1-1.5 0V9.25H4a.75.75 0 0 1 0-1.5h2.5v-2.5a.75.75 0 0 1 .75-.75Z"/></svg>
+        Installation guide
+      </a>
+      <a class="btn btn-outline" href="https://github.com/rezwanvaiya2-0/netlens" target="_blank" rel="noopener">
+        <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8 0 3.54-2.29 6.53-5.47 7.59.4-.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+
+    <div class="badges" style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">
+      <img src="https://img.shields.io/badge/NfSen-1.3.6p1-0969da" alt="NfSen 1.3.6p1">
+      <img src="https://img.shields.io/badge/NfDump-1.6.17-0969da" alt="NfDump 1.6.17">
       <img src="https://img.shields.io/badge/Ubuntu-20.04-E95420?logo=ubuntu&logoColor=white" alt="Ubuntu 20.04">
       <img src="https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white" alt="Docker">
-      <img src="https://img.shields.io/badge/Web%20UI-Port%208070-22d3ee" alt="Web UI Port 8070">
-      <img src="https://img.shields.io/badge/NetFlow-UDP%202055%2F2056-6366f1" alt="NetFlow UDP 2055/2056">
-      <img src="https://img.shields.io/badge/License-BSD--3--Clause-40BC3D" alt="License: BSD-3-Clause">
-    </div>
-    <div class="cta">
-      <a class="btn btn-primary" href="#install">Get started</a>
-      <a class="btn btn-ghost" href="docs/librenms-integration.html">LibreNMS integration</a>
+      <img src="https://img.shields.io/badge/Web%20UI-Port%208070-0969da" alt="Web UI Port 8070">
+      <img src="https://img.shields.io/badge/NetFlow-UDP%202055%2F2056-8250df" alt="NetFlow UDP 2055/2056">
+      <img src="https://img.shields.io/badge/License-BSD--3--Clause-1f883d" alt="License: BSD-3-Clause">
     </div>
   </div>
 </section>
@@ -54,32 +78,32 @@
 <section id="features">
   <div class="container">
     <h2>What is NetLens?</h2>
-    <p class="lead">NetLens packages the classic NfSen + NfDump NetFlow analysis stack into a single Docker container — production-grade traffic analysis without the manual compiling and dependency management.</p>
+    <p class="lead">NetLens packages the classic NfSen + NfDump NetFlow analysis stack into a single Docker container — production-grade traffic analysis without manual compiling and dependency management.</p>
     <div class="cards">
       <div class="card">
         <h3>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="#0969da" aria-hidden="true"><path d="M1.5 8a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0Zm6.5 4.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Z"/></svg>
           Collect
         </h3>
         <p><code>nfcapd</code> listens on UDP ports 2055/2056 (plus any port you add) and captures NetFlow v5/v9/IPFIX from your routers.</p>
       </div>
       <div class="card">
         <h3>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="#8250df" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Z"/></svg>
           Store
         </h3>
         <p>Flow data lives in bind-mounted folders next to <code>docker-compose.yml</code> — visible, browsable, and it survives rebuilds.</p>
       </div>
       <div class="card">
         <h3>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="#0969da" aria-hidden="true"><path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm6.5-3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/></svg>
           Visualize
         </h3>
         <p>The Web UI (port 8070) turns raw flows into RRD graphs — traffic, flows, and packets per source, behind a styled login page.</p>
       </div>
       <div class="card">
         <h3>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="#8250df" aria-hidden="true"><path d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16ZM7.25 4a.75.75 0 0 0 1.5 0v-.75a.75.75 0 0 0-1.5 0V4Zm0 6.5a.75.75 0 0 0 1.5 0V7a.75.75 0 0 0-1.5 0v3.5ZM7.25 13a.75.75 0 0 0 1.5 0v-.75a.75.75 0 0 0-1.5 0V13Z"/></svg>
           Retain
         </h3>
         <p>Set Expire / Max size per profile from the Web UI. The <code>nfsend</code> daemon enforces it automatically — no cron, no config edits.</p>
@@ -88,48 +112,20 @@
   </div>
 </section>
 
-<section id="how-it-works" class="alt">
-  <div class="container">
-    <h2>How it works</h2>
-    <p class="lead">From your router to a graph on screen — one clean pipeline.</p>
-    <pre><code><span class="c"># The flow pipeline</span>
-Your router ──UDP NetFlow──► <span class="g">VPS port 2055/2056</span> ──Docker port publish──► container
-      ──nfcapd collector──► <span class="g">nfsen-data/live/&lt;router&gt;/</span>   (raw flow files)
-      ──nfsend (every 5 min)──► <span class="g">nfsen-stat/live/&lt;router&gt;.rrd</span>  (graphs)
-      ──► Web UI  <span class="k">http://YOUR_IP:8070/nfsen.php</span></code></pre>
-    <div class="cards">
-      <div class="card">
-        <h3>Router sends NetFlow</h3>
-        <p>Your router exports NetFlow v5/v9 to your VPS IP on a UDP port.</p>
-      </div>
-      <div class="card">
-        <h3>Docker forwards the port</h3>
-        <p>The <code>ports:</code> line in <code>docker-compose.yml</code> publishes it into the container — without it, packets are dropped.</p>
-      </div>
-      <div class="card">
-        <h3>nfcapd collects</h3>
-        <p>One collector per port (from the router sources in <code>nfsen.conf</code>) writes raw flow files every 5 minutes.</p>
-      </div>
-      <div class="card">
-        <h3>nfsend graphs them</h3>
-        <p>The daemon turns the flows into RRD files, and the Web UI draws the charts.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="install">
+<section id="install" class="alt">
   <div class="container">
     <h2>Installation</h2>
     <p class="lead">Up and running in three commands. You need a VPS or server with Docker (Compose v2). First install takes a few minutes to build.</p>
 
     <h3>Quick start</h3>
-    <pre><code><span class="c"># 1. Clone the repository</span>
+    <div class="code-block">
+      <pre><code><span class="c"># 1. Clone the repository</span>
 git clone https://github.com/rezwanvaiya2-0/netlens.git
 cd netlens
 
 <span class="c"># 2. Build &amp; start (same as: docker compose up -d --build)</span>
 sudo ./install.sh</code></pre>
+    </div>
 
     <div class="note ok"><strong>First run only:</strong> the <code>--build</code> flag is needed just once. After that, <code>docker compose up -d</code> starts the container in seconds — your sources, config, and data persist in the folders next to <code>docker-compose.yml</code>.</div>
 
@@ -140,7 +136,9 @@ sudo ./install.sh</code></pre>
       <tr><th>Password</th><td><code>change-me-now</code></td></tr>
     </table>
     <div class="note warn"><strong>Change the password immediately</strong> — one command, takes effect instantly, no restart needed:</div>
-    <pre><code>docker exec netlens htpasswd -b /var/nfsen/etc/.htpasswd admin YourNewPass123</code></pre>
+    <div class="code-block">
+      <pre><code>docker exec netlens htpasswd -b /var/nfsen/etc/.htpasswd admin YourNewPass123</code></pre>
+    </div>
 
     <h3>Data folders</h3>
     <p>Your data lives in 4 real folders next to <code>docker-compose.yml</code> — no hidden Docker volumes:</p>
@@ -159,7 +157,8 @@ sudo ./install.sh</code></pre>
 
     <h3>Connect a router</h3>
     <p>UDP ports <code>2055</code> and <code>2056</code> are pre-opened, with a demo <code>router1</code> source so the UI shows graphs on first install. To add a router on a new port:</p>
-    <pre><code><span class="c"># 1. Open the port in docker-compose.yml under ports:</span>
+    <div class="code-block">
+      <pre><code><span class="c"># 1. Open the port in docker-compose.yml under ports:</span>
 <span class="c">#    - "2070:2070/udp"</span>
 
 <span class="c"># 2. Add the router source (persists forever)</span>
@@ -167,34 +166,32 @@ docker exec netlens bash -c "sed -i \"/^);$/i\\    'myrouter' =&gt; { 'port' =&g
 
 <span class="c"># 3. Recreate the container (~3 seconds, no rebuild, no data loss)</span>
 docker compose up -d</code></pre>
+    </div>
 
     <h3>Set data retention</h3>
     <p>From the Web UI: <strong>Profile Admin → live profile → Edit</strong>. Set <strong>Expire</strong> (max age, e.g. <code>3d</code>) and <strong>Max size</strong> (hard disk cap, e.g. <code>44G</code>), then Save. The daemon enforces it automatically within minutes.</p>
   </div>
 </section>
 
-<section id="docs" class="alt">
+<section id="docs">
   <div class="container">
     <h2>Documentation</h2>
-    <p class="lead center">Guides for going beyond the basics.</p>
+    <p class="lead center" style="margin-left:auto;margin-right:auto;text-align:center;">Guides for going beyond the basics.</p>
     <div class="cards">
       <div class="card">
         <h3>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
           <a href="docs/librenms-integration.html">LibreNMS Integration</a>
         </h3>
         <p>Full step-by-step guide: share the NfSen data folders over NFS (read-only) and show NetFlow graphs + Top-N stats inside LibreNMS.</p>
       </div>
       <div class="card">
         <h3>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           <a href="https://github.com/rezwanvaiya2-0/netlens/blob/main/README.md" target="_blank" rel="noopener">README (full reference)</a>
         </h3>
         <p>Complete documentation: router sources, retention, password protection, security, storage recovery, and troubleshooting.</p>
       </div>
       <div class="card">
         <h3>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           <a href="https://github.com/rezwanvaiya2-0/netlens/issues" target="_blank" rel="noopener">Report an issue</a>
         </h3>
         <p>Found a bug or have a feature request? Open an issue on GitHub and we'll take a look.</p>
