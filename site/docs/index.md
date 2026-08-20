@@ -4,9 +4,6 @@ hero:
   name: NetLens
   text: Network visibility, without the stack tax.
   tagline: Dockerized NfSen NetFlow Analyzer for capture, storage, visualization, and retention.
-  image:
-    src: /netlens-icon.svg
-    alt: NetLens network lens logo
   actions:
     - theme: brand
       text: Install NetLens
@@ -21,6 +18,18 @@ hero:
 
 <div class="home-hero">
 
+<div class="vp-doc home-install">
+
+## Install in one command
+
+```bash
+git clone https://github.com/rezwanvaiya2-0/netlens.git && cd netlens && sudo ./install.sh
+```
+
+[See the installation checklist →](/guide/installation)
+
+</div>
+
 <div class="feature-grid">
   <div class="feature-card"><div class="feature-kicker">01 / Capture</div><h3>Collect flows</h3><p>Receive NetFlow v5, v9, and IPFIX from routers, firewalls, and edge devices.</p></div>
   <div class="feature-card"><div class="feature-kicker">02 / Store</div><h3>Keep ownership</h3><p>Use visible bind-mounted folders that are easy to inspect, back up, and rebuild.</p></div>
@@ -29,15 +38,6 @@ hero:
 </div>
 
 <div class="vp-doc" style="max-width: 760px; margin: 0 auto; padding: 0 24px;">
-
-## Install in one command
-
-```bash
-# Clone, build, and start NetLens
-git clone https://github.com/rezwanvaiya2-0/netlens.git && cd netlens && sudo ./install.sh
-```
-
-[See the installation checklist →](/guide/installation)
 
 ## How it works
 

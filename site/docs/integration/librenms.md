@@ -1,9 +1,4 @@
 
----
-title: LibreNMS Integration
-description: Share NetLens NfSen data read-only over NFS with a separate LibreNMS server.
----
-
 # LibreNMS Integration
 
 Share the NfSen data folders over NFS (read-only) so a LibreNMS server on a **different
@@ -12,13 +7,13 @@ Share the NfSen data folders over NFS (read-only) so a LibreNMS server on a **di
 
 
 
-## 0 — At a glance (TL;DR)
+## Quick Summary
 
 1. **NetLens (Docker) stays on the VPS and keeps writing** to its local folders — no other writer ever touches the live data.
 2. **Share only these two folders over NFS, read-only**, to the LibreNMS server:
    - `nfsen-data/` (= container `/var/nfsen/profiles-data` → raw flow files)
    - `nfsen-stat/` (= container `/var/nfsen/profiles-stat` → RRD graph files)
-3. **Install nfdump 1.6.25 on the LibreNMS server** to match the container's v1.6 file format. (Ubuntu 24.04's default apt package is nfdump 1.7.3 — an incompatible format — and 1.6.17 itself crashes on 24.04's toolchain, so we build 1.6.25 from source. See [section 5](#5-part-3--install-nfdump-on-the-librenms-server).)
+3. **Install nfdump 1.6.25 on the LibreNMS server** to match the container's v1.6 file format. Ubuntu 24.04's default apt package is nfdump 1.7.3, which uses an incompatible format. Nfdump 1.6.17 itself crashes on the Ubuntu 24.04 toolchain, so build 1.6.25 from source. See [Part 3](#5-part-3-install-nfdump-on-the-librenms-server-version-rule).
 4. **Tell LibreNMS where the data is** (`lnms config:set`) and the **Netflow tab** appears on every device page.
 5. **Never run two NfSen instances writing to the same shared folder.** Ever.
 
@@ -217,7 +212,7 @@ Append these **two** lines to `/etc/fstab` (each has exactly 6 fields: device, m
 `/etc/fstab` accepts the six-field mount entries below, not the `sudo mount` commands from Step 3. Mixing them causes a parse error and can prevent the shares from returning after reboot.
 :::
 
-::: warn fstab gotchas (all bit us in production)
+::: warning fstab gotchas (all bit us in production)
   <ul>
     <li>Write <strong>only</strong> the two fstab lines above. Do <strong>not</strong> paste the
     <code>sudo mount</code> commands from Step 3 into <code>/etc/fstab</code> — boot then fails with
@@ -245,7 +240,7 @@ LibreNMS runs nfdump against your flow files. **The file format must match the c
 - Ubuntu 24.04's default package is **nfdump 1.7.3 = WRONG**. Do not use it.
 - Ubuntu 20.04's apt package is nfdump 1.6.17 = perfect match (only relevant if you ever run LibreNMS on 20.04).
 
-::: warn Do NOT use 1.6.17 on Ubuntu 24.04
+::: warning Do NOT use 1.6.17 on Ubuntu 24.04
   Its argument/range parsing has a stack buffer overflow that 24.04's newer glibc/GCC catches at
   runtime: <code>nfdump -M ... -R .</code> dies with
   `*** buffer overflow detected ***`. **1.6.25** is the last release of the
@@ -319,27 +314,26 @@ If it says "Can't open ... permission denied", fix per [section 9](#9-permission
 
 Run these as the `librenms` user (or with `sudo -u librenms`):
 
+::: warning Set the compatible binary and flat layout
+Point LibreNMS to the nfdump 1.6.25 binary built in Part 3. NetLens stores flat `nfcapd.YYYYMMDDHHMM` files, so `nfsen_subdirlayout` must be `0`; otherwise LibreNMS looks for `YYYY/MM/DD/` subdirectories and finds nothing.
+:::
+
+::: danger Never leave `nfsen_suffix` empty
+LibreNMS uses this value in a regular-expression check for the RRD. An empty suffix becomes an empty regex and the Netflow tab never appears. `_none` is safe when it does not occur in device hostnames.
+:::
+
 ```bash
 lnms config:set nfsen_enable true
 lnms config:set nfsen_split_char '_'
 lnms config:set nfsen_base.+ '/var/nfsen/'
 lnms config:set nfsen_rrds.+ '/var/nfsen/profiles-stat/live/'
 lnms config:set nfsen_rrds.+ '/var/nfsen/profiles-stat'
-lnms config:set nfdump /usr/local/bin/nfdump   # the 1.6.25 we built (NOT /usr/bin/nfdump = 1.7.3)
-lnms config:set nfsen_subdirlayout 0   # IMPORTANT: this NfSen stores flow files
-                                       # FLAT (nfcapd.YYYYMMDDHHMM, no subdirs -
-                                       # its nfsen.conf has no $SUBdirlayout).
-                                       # Without 0, LibreNMS looks for files in
-                                       # YYYY/MM/DD/ subdirs and finds nothing.
-lnms config:set nfsen_suffix '_none'   # REQUIRED, never leave empty: LibreNMS runs
-                                       # preg_replace('/' . nfsen_suffix . '/', ...)
-                                       # and an empty suffix = empty regex = NULL =
-                                       # the RRD check always fails = Netflow tab
-                                       # never appears. Use any string that never
-                                       # occurs in device hostnames.
+lnms config:set nfdump /usr/local/bin/nfdump
+lnms config:set nfsen_subdirlayout 0
+lnms config:set nfsen_suffix '_none'
 ```
 
-::: warn nfsen_suffix must never be empty
+::: warning nfsen_suffix must never be empty
   If your device hostnames include your domain, use the real domain suffix instead of
   <code>_none</code> (the LibreNMS docs' trick):
   <code>lnms config:set nfsen_suffix '_yourdomain_com'</code>.
@@ -390,7 +384,7 @@ LibreNMS will look for the RRD named after the transformed hostname (`nfsen_spli
 
 **Devices added by IP in LibreNMS:** create **symbolic links** so the IP-based names resolve to the real source. You need **two** — one for the RRD graphs and one for the raw flow data (nfdump stats use it too).
 
-::: warn Create symlinks on the VPS, not on the LibreNMS server
+::: warning Create symlinks on the VPS, not on the LibreNMS server
   The NFS exports are **read-only** — the mount rejects writes, so you cannot create
   symlinks on the LibreNMS server. Create them on the VPS inside the project folders (next to
   <code>docker-compose.yml</code>) — they show up on the LibreNMS side through NFS:
