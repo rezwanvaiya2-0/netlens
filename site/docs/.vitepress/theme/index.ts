@@ -3,6 +3,7 @@ import type { Theme } from 'vitepress'
 import { onMounted } from 'vue'
 import mermaid from 'mermaid'
 import './custom.css'
+import Layout from './Layout.vue'
 
 const renderMermaid = () => {
 	mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme: 'neutral' })
@@ -46,6 +47,7 @@ const setupInstallTerminal = () => {
 
 export default {
 	extends: DefaultTheme,
+ Layout,
 	enhanceApp({ router }) {
 		if (typeof window === 'undefined') return
 		onMounted(() => window.requestAnimationFrame(() => { renderMermaid(); setupInstallTerminal() }))
