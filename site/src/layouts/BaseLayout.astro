@@ -127,17 +127,37 @@ const SITE = "https://netlens.rezwan.bro.bd";
           document.body.removeChild(ta);
         }
 
-        // Copy buttons on every code block (except the hero terminal — it has its own)
+        // Add a consistent action bar to every documentation code block.
         document.querySelectorAll("pre").forEach(function (pre) {
           if (pre.closest(".terminal-body")) return;
+          var code = pre.querySelector("code");
+          var language = "code";
+          if (code) {
+            var languageClass = Array.prototype.find.call(code.classList, function (name) {
+              return name.indexOf("language-") === 0;
+            });
+            if (languageClass) language = languageClass.replace("language-", "");
+          }
+          pre.setAttribute("data-language", language);
           var btn = document.createElement("button");
           btn.type = "button";
           btn.className = "copy-btn";
           btn.setAttribute("aria-label", "Copy code");
           btn.innerHTML =
             '<svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5Z"/><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25v-7.5Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25h-7.5Z"/></svg><span>Copy</span>';
-          btn.addEventListener("click", function () { copyText(pre.innerText, btn); });
+          btn.addEventListener("click", function () {
+            var clone = pre.cloneNode(true);
+            var cloneButton = clone.querySelector(".copy-btn");
+            if (cloneButton) cloneButton.remove();
+            var cloneBadge = clone.querySelector(".code-language");
+            if (cloneBadge) cloneBadge.remove();
+            copyText(clone.innerText, btn);
+          });
           pre.appendChild(btn);
+          var badge = document.createElement("span");
+          badge.className = "code-language";
+          badge.textContent = language;
+          pre.appendChild(badge);
         });
 
         // Hero terminal copy (always-visible button)

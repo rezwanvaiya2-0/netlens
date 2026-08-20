@@ -12,6 +12,7 @@ const description =
   Astro.props.description ??
   frontmatter.description ??
   "NetLens documentation.";
+const section = Astro.props.section ?? frontmatter.section ?? "Documentation";
 ---
 
 <BaseLayout title={title} description={description}>
@@ -24,7 +25,7 @@ const description =
 
       <article class="docs">
         <nav class="docs-breadcrumb">
-          <a href="/">Home</a> / LibreNMS Integration
+          <a href="/">Home</a> / {section}
         </nav>
         <slot />
       </article>

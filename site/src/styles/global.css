@@ -536,6 +536,8 @@ article.docs pre {
   color: var(--code-text);
   border: 1px solid var(--code-border);
 }
+.code-block pre::before, article.docs pre::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 34px; background: linear-gradient(90deg, rgba(16,185,129,0.08), transparent 60%); border-bottom: 1px solid color-mix(in srgb, var(--code-border) 70%, transparent); pointer-events: none; }
+.code-language { position: absolute; top: 10px; left: 20px; color: var(--text-dim); font: 700 .68rem/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; pointer-events: none; z-index: 2; }
 .code-block pre code { font-family: inherit; background: none; border: none; padding: 0; font-size: inherit; color: var(--code-text); }
 pre { position: relative; }
 .copy-btn {
@@ -559,6 +561,7 @@ pre { position: relative; }
 }
 .copy-btn:hover { background: var(--bg-subtle); color: var(--text); }
 .copy-btn.copied { color: var(--accent); border-color: var(--accent); }
+.code-block pre[data-language="bash"], .code-block pre[data-language="sh"], article.docs pre[data-language="bash"], article.docs pre[data-language="sh"] { background: var(--bg-terminal); color: var(--term-text); border-color: var(--term-border); box-shadow: var(--shadow-md); }
 
 /* Hand-highlighted spans inside landing-page code blocks */
 .code-block .c { color: var(--text-dim); font-style: italic; }
@@ -669,6 +672,12 @@ article.docs p, article.docs li, section p { overflow-wrap: break-word; }
 
 .docs-breadcrumb { font-size: 0.92rem; margin-bottom: 22px; color: var(--text-dim); }
 .docs-breadcrumb a { color: var(--accent); }
+.docs-nav-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 28px; }
+.docs-nav-card { display: block; padding: 20px; border: 1px solid var(--border-muted); border-radius: 10px; background: var(--bg-panel); color: var(--text); transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease; }
+.docs-nav-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md); text-decoration: none; transform: translateY(-2px); }
+.docs-nav-card h3 { margin: 0 0 6px; color: var(--text); }
+.docs-nav-card p { margin: 0; color: var(--text-dim); font-size: .92rem; }
+.docs-nav-card .card-kicker { color: var(--accent); font: 700 .7rem/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 12px; }
 
 article.docs h1 { font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 12px; font-weight: 800; }
 article.docs .docs-sub { color: var(--text-dim); font-size: 1rem; margin-bottom: 30px; }
@@ -738,6 +747,7 @@ footer a:hover { color: var(--accent); text-decoration: none; }
   }
   .docs-toc ol li a::before { content: ""; display: none; }
   .docs-toc ol li a:hover { background: var(--bg-subtle); }
+  .docs-nav-grid { grid-template-columns: 1fr; }
 }
 
 /* Nav collapses to hamburger earlier so the GitHub button never crowds */

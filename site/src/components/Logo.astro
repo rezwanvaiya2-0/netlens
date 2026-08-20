@@ -31,15 +31,8 @@ const { size = 38, class: className = "", title = "NetLens" } = Astro.props;
   </defs>
 
   <rect x="2" y="2" width="44" height="44" rx="14" fill="url(#nl-bg)" stroke="#1f3a2d" stroke-width="1.5" />
-  <path d="M9 33V15.5h5.2l7.6 12.8 7.4-12.8H39V33h-4.8V22.2l-8.2 14h-2.4l-8.3-14V33H9Z" fill="url(#nl-ring)" opacity="0.95" />
-
-  <g stroke="url(#nl-ring)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.9">
-    <path d="M7 12.5H41" />
-    <path d="M7 35.5H41" />
-    <path d="M10 9.5V38.5" />
-    <path d="M38 9.5V38.5" />
-  </g>
-
-  <circle cx="39" cy="12.5" r="2.2" fill="#67e8f9" />
-  <circle cx="9" cy="35.5" r="2.2" fill="#a7f3d0" />
+  <g stroke="url(#nl-ring)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.85"><path d="M7 16H41" /><path d="M7 24H41" /><path d="M7 32H41" /></g>
+  <g fill="#67e8f9"><circle cx="41" cy="16" r="2" /><circle cx="41" cy="24" r="2" /><circle cx="41" cy="32" r="2" /></g>
+  <circle cx="24" cy="24" r="12" fill="url(#nl-ring)" opacity="0.12" /><circle cx="24" cy="24" r="12" fill="none" stroke="url(#nl-ring)" stroke-width="3" />
+  <path d="M16 18a12 12 0 0 1 7-5" fill="none" stroke="#fff" stroke-opacity="0.42" stroke-width="2" stroke-linecap="round" /><circle cx="24" cy="24" r="2.3" fill="#fff" opacity="0.9" />
 </svg>
