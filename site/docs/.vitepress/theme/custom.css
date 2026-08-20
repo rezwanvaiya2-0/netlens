@@ -68,7 +68,10 @@
 .verification-list { padding: 18px 22px; border: 1px solid var(--vp-c-divider); border-radius: 10px; background: var(--vp-c-bg-soft); }
 .verification-list li { margin: 8px 0; }
 
-.home-hero { border-top: 1px solid var(--vp-c-divider); background: radial-gradient(circle at 72% 8%, rgba(34,211,238,.13), transparent 32%), radial-gradient(circle at 20% 0%, rgba(16,185,129,.1), transparent 36%); }
+.home-hero { border-top: 1px solid var(--vp-c-divider); background: radial-gradient(circle at 74% 5%, rgba(34,211,238,.2), transparent 34%), radial-gradient(circle at 18% 0%, rgba(6,182,212,.14), transparent 34%), linear-gradient(180deg, rgba(232,249,250,.72) 0%, rgba(251,253,253,0) 58%); position: relative; isolation: isolate; }
+.home-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .34; background-image: linear-gradient(rgba(14,116,144,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(14,116,144,.08) 1px, transparent 1px); background-size: 44px 44px; mask-image: linear-gradient(180deg, black, transparent 72%); }
+.dark .home-hero { background: radial-gradient(circle at 74% 5%, rgba(34,211,238,.17), transparent 34%), radial-gradient(circle at 18% 0%, rgba(6,182,212,.1), transparent 34%), var(--vp-c-bg); }
+.dark .home-hero::before { opacity: .2; background-image: linear-gradient(rgba(103,232,249,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(103,232,249,.09) 1px, transparent 1px); }
 .home-hero .tagline { color: var(--vp-c-text-2); }
 .home-install { max-width: 760px; margin: 16px auto 56px; padding: 0 24px; text-align: center; }
 .home-install h2 { margin: 7px 0 0; text-align: center; font-size: 26px; letter-spacing: -.035em; }
