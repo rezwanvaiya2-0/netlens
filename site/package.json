@@ -3,15 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "NetLens — official static website (Astro). Landing page + LibreNMS integration docs.",
+  "description": "NetLens — official VitePress documentation for the Dockerized NfSen analyzer.",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.0.0",
-    "astro": "^5.0.0"
+    "vitepress": "^1.6.4"
   }
 }
