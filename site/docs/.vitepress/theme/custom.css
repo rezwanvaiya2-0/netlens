@@ -44,6 +44,11 @@
 .vp-doc div[class*='language-'] > button.copy { right: 12px; }
 .vp-doc div[class*='language-bash'], .vp-doc div[class*='language-sh'], .vp-doc div[class*='language-shell'] { background-color: #0d171a; }
 .vp-doc div[class*='language-bash'] code, .vp-doc div[class*='language-sh'] code, .vp-doc div[class*='language-shell'] code { color: #d9f7eb; }
+.integration-diagram { margin: 28px 0; padding: 22px 12px; overflow-x: auto; border: 1px solid var(--vp-c-divider); border-radius: 10px; background: var(--vp-c-bg-soft); }
+.integration-diagram .mermaid { min-width: 760px; text-align: center; }
+.integration-diagram svg { max-width: 100%; height: auto; }
+.verification-list { padding: 18px 22px; border: 1px solid var(--vp-c-divider); border-radius: 10px; background: var(--vp-c-bg-soft); }
+.verification-list li { margin: 8px 0; }
 
 .home-hero { border-top: 1px solid var(--vp-c-divider); background: radial-gradient(circle at 70% 10%, rgba(34,211,238,.12), transparent 34%), radial-gradient(circle at 20% 0%, rgba(16,185,129,.13), transparent 38%); }
 .home-hero .tagline { color: var(--vp-c-text-2); }
