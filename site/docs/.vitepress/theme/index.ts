@@ -1,5 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
+import { onMounted } from 'vue'
 import mermaid from 'mermaid'
 import './custom.css'
 
@@ -12,6 +13,7 @@ export default {
 	extends: DefaultTheme,
 	enhanceApp({ router }) {
 		if (typeof window === 'undefined') return
+		onMounted(() => window.requestAnimationFrame(renderMermaid))
 		router.onAfterRouteChanged = () => window.requestAnimationFrame(renderMermaid)
 	}
 } satisfies Theme

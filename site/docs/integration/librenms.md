@@ -77,18 +77,18 @@ Rule: **NFS share = read-only for the LibreNMS server.** NfSen never reads back 
 
 <div class="integration-diagram">
 
-```mermaid
+<div class="mermaid">
 flowchart LR
   subgraph VPS[NetLens VPS]
     R[Router exporters] -->|NetFlow UDP| N[NfSen in Docker]
-    N --> D[nfsen-data<br/>raw flow files]
-    N --> S[nfsen-stat<br/>RRD graph files]
-    N -.-> V[nfsen-var<br/>not shared]
-    N -.-> E[nfsen-etc<br/>not shared; contains .htpasswd]
+    N --> D[nfsen-data&lt;br/&gt;raw flow files]
+    N --> S[nfsen-stat&lt;br/&gt;RRD graph files]
+    N -.-> V[nfsen-var&lt;br/&gt;not shared]
+    N -.-> E[nfsen-etc&lt;br/&gt;not shared; contains .htpasswd]
   end
   subgraph L[LibreNMS server]
-    M[/var/nfsen/profiles-data<br/>read-only NFS mount/]
-    Q[/var/nfsen/profiles-stat<br/>read-only NFS mount/]
+    M[/var/nfsen/profiles-data&lt;br/&gt;read-only NFS mount/]
+    Q[/var/nfsen/profiles-stat&lt;br/&gt;read-only NFS mount/]
     UI[LibreNMS Netflow tab]
     F[nfdump 1.6.25]
   end
@@ -96,7 +96,7 @@ flowchart LR
   S -->|NFS read-only| Q
   M --> F --> UI
   Q --> UI
-```
+</div>
 
 </div>
 
