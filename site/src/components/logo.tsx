@@ -19,28 +19,12 @@ export function Logo({
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label="NetLens logo"
-      className={cn("shrink-0", className)}
+      className={cn("text-foreground", className)}
     >
-      <defs>
-        <linearGradient
-          id="nl-grad"
-          x1="0"
-          y1="0"
-          x2="40"
-          y2="40"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0%" stopColor="#22d3ee" />
-          <stop offset="100%" stopColor="#2dd4bf" />
-        </linearGradient>
-      </defs>
-
-      <rect x="2" y="2" width="36" height="36" rx="10" fill="url(#nl-grad)" />
-
       <path
         d={NIFI_FLOW_PATH}
-        fill="#0b1417"
-        transform="translate(9.5 9.5) scale(0.9) rotate(-12 12 12) scale(-1 1) translate(-24 0)"
+        fill="currentColor"
+        transform="translate(3.4 3.4) scale(1.32) rotate(-10 12 12) scale(-1 1) translate(-24 0)"
       />
     </svg>
   );

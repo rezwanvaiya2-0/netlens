@@ -3,6 +3,7 @@ import { DocsPageLayout } from "@/components/docs-layout";
 import { PageHeader } from "@/components/page-header";
 import { Callout } from "@/components/callout";
 import { CodeBlock } from "@/components/code-block";
+import { RouterFlowDiagram } from "@/components/flow-diagram";
 
 export const metadata: Metadata = {
   title: "Adding a Router on a New Port",
@@ -21,14 +22,7 @@ export default function NewPortPage() {
 
       <div className="docs">
         <h2>How it actually works (router to graph)</h2>
-        <CodeBlock
-          lang="text"
-          title="pipeline"
-          code={`Your router ──UDP NetFlow──► VPS port 2070 ──(Docker port publish)──► container port 2070
-      ──(nfcapd collector, from the nfsen.conf source)──► nfsen-data/live/<router>/  (raw files)
-      ──(nfsend, every 5 min)──► nfsen-stat/live/<router>.rrd  (graphs)
-      ──► Web UI  http://YOUR_IP:8070/nfsen.php`}
-        />
+        <RouterFlowDiagram />
         <ol>
           <li>
             <strong>Your router sends NetFlow</strong> to your VPS IP on a UDP

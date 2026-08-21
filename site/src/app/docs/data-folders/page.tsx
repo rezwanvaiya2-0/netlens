@@ -3,6 +3,7 @@ import { DocsPageLayout } from "@/components/docs-layout";
 import { PageHeader } from "@/components/page-header";
 import { Callout } from "@/components/callout";
 import { CodeBlock } from "@/components/code-block";
+import { BindMountDiagram } from "@/components/flow-diagram";
 
 export const metadata: Metadata = {
   title: "Data Folders & Bind Mounts",
@@ -92,16 +93,7 @@ export default function DataFoldersPage() {
           "shared" with a path inside the container. Both sides see the same
           files:
         </p>
-        <CodeBlock
-          lang="text"
-          title="bind mount layout"
-          code={`VPS host (on your server)         Inside the container
-──────────────────────────────   ───────────────────────────────
-./nfsen-data/   ◄── shared ──►  /var/nfsen/profiles-data/   raw NetFlow files
-./nfsen-stat/   ◄── shared ──►  /var/nfsen/profiles-stat/   RRD graph files
-./nfsen-var/    ◄── shared ──►  /var/nfsen/var/             logs + runtime
-./nfsen-etc/    ◄── shared ──►  /var/nfsen/etc/             nfsen.conf (sources)`}
-        />
+        <BindMountDiagram />
         <p>
           Example: when the collector saves flow data it writes to{" "}
           <code>/var/nfsen/profiles-data/live/router1/</code> inside the
