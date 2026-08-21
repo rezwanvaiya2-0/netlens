@@ -108,11 +108,10 @@
    Shiki dual-theme token colors (light + dark)
    ============================================================ */
 .shiki {
-  background: transparent !important;
   margin: 0;
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.825rem;
-  line-height: 1.7;
+  font-size: 0.875rem;
+  line-height: 1.75;
   tab-size: 2;
 }
 
@@ -121,20 +120,30 @@
   min-width: 100%;
 }
 
+html:not(.dark) .shiki {
+  color: var(--shiki-light) !important;
+  background-color: transparent !important;
+}
+
 html:not(.dark) .shiki span {
-  color: var(--shiki-light);
-  background-color: var(--shiki-light-bg);
-  font-style: var(--shiki-light-font-style);
-  font-weight: var(--shiki-light-font-weight);
-  text-decoration: var(--shiki-light-text-decoration);
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg) !important;
+  font-style: var(--shiki-light-font-style) !important;
+  font-weight: var(--shiki-light-font-weight) !important;
+  text-decoration: var(--shiki-light-text-decoration) !important;
+}
+
+.dark .shiki {
+  color: var(--shiki-dark) !important;
+  background-color: transparent !important;
 }
 
 .dark .shiki span {
-  color: var(--shiki-dark);
-  background-color: var(--shiki-dark-bg);
-  font-style: var(--shiki-dark-font-style);
-  font-weight: var(--shiki-dark-font-weight);
-  text-decoration: var(--shiki-dark-text-decoration);
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
 /* ============================================================

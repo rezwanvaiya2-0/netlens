@@ -229,10 +229,10 @@ sudo showmount -e localhost        # you should see the 2 exports`}
         <CodeBlock
           lang="bash"
           title="ufw rules"
-          code={`sudo ufw allow from 103.159.37.199 to any port 111 proto tcp
-sudo ufw allow from 103.159.37.199 to any port 2049 proto tcp
-sudo ufw allow from 103.159.37.199 to any port 111 proto udp
-sudo ufw allow from 103.159.37.199 to any port 2049 proto udp`}
+          code={`sudo ufw allow from 127.0.0.1 to any port 111 proto tcp
+sudo ufw allow from 127.0.0.1 to any port 2049 proto tcp
+sudo ufw allow from 127.0.0.1 to any port 111 proto udp
+sudo ufw allow from 127.0.0.1 to any port 2049 proto udp`}
         />
 
         <Callout type="info" title="rpcbind port range">
@@ -274,8 +274,8 @@ sudo mount -t nfs4 <VPS_IP>:<VPS_PROJECT_PATH>/nfsen-stat /var/nfsen/profiles-st
         <CodeBlock
           lang="bash"
           title="mount example"
-          code={`sudo mount -t nfs4 103.187.23.163:/root/netlens/nfsen-data /var/nfsen/profiles-data
-sudo mount -t nfs4 103.187.23.163:/root/netlens/nfsen-stat /var/nfsen/profiles-stat`}
+          code={`sudo mount -t nfs4 127.0.0.1:/root/netlens/nfsen-data /var/nfsen/profiles-data
+sudo mount -t nfs4 127.0.0.1:/root/netlens/nfsen-stat /var/nfsen/profiles-stat`}
         />
 
         <h3>Step 4 — Make the mounts permanent</h3>
@@ -611,7 +611,7 @@ sudo ln -s router1 192_168_1_50             # data dir for nfdump stats`}
           or poll log lines like <code>device:poll 192.168.1.50</code>). A
           symlink with the wrong name means the Netflow tab never appears — the
           name must match exactly, e.g. a device polled as{" "}
-          <code>103.187.22.1</code> needs <code>103_187_22_1.rrd</code>.
+          <code>127.0.0.1</code> needs <code>127_0_0_1.rrd</code>.
         </Callout>
 
         <p>
@@ -816,8 +816,8 @@ sudo -u librenms ./validate.php       # LibreNMS self-check (in its install dir)
             hostnames</strong> (21-char limit, dots → <code>_</code>); for
             devices added by IP create <strong>two symlinks on the VPS</strong>{" "}
             (RRD <code>.rrd</code> + data dir) named after the device's real
-            hostname (check the poll log, e.g. <code>103.187.22.1</code> →{" "}
-            <code>103_187_22_1.rrd</code>). The mount is read-only, so the
+            hostname (check the poll log, e.g. <code>127.0.0.1</code> →{" "}
+            <code>127_0_0_1.rrd</code>). The mount is read-only, so the
             symlinks must be created VPS-side.
           </li>
           <li>

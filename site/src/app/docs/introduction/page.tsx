@@ -4,6 +4,7 @@ import { DocsPageLayout } from "@/components/docs-layout";
 import { PageHeader } from "@/components/page-header";
 import { Callout } from "@/components/callout";
 import { CodeBlock } from "@/components/code-block";
+import { FlowDiagram } from "@/components/flow-diagram";
 
 export const metadata: Metadata = {
   title: "Introduction",
@@ -65,14 +66,9 @@ export default function IntroductionPage() {
           <code>http://&lt;YOUR_IP&gt;:8070/nfsen.php</code>.
         </p>
 
-        <CodeBlock
-          lang="text"
-          title="flow pipeline"
-          code={`Router ──UDP NetFlow──► VPS port 2055/2056 ──(Docker publish)──► container
-      ── nfcapd  ──► nfsen-data/live/<router>/      (raw flow files)
-      ── nfsend  ──► nfsen-stat/live/<router>.rrd  (RRD graphs)
-      ──► UI      http://YOUR_IP:8070/nfsen.php`}
-        />
+        <div className="my-6">
+          <FlowDiagram />
+        </div>
 
         <h2>What makes it different</h2>
         <ul>

@@ -1,3 +1,4 @@
+import { ChevronRight } from "lucide-react";
 import { highlightCode, type CodeLanguage } from "@/lib/highlight";
 import { CopyButton } from "./copy-button";
 import { cn } from "@/lib/utils";
@@ -16,30 +17,23 @@ export async function CodeBlock({
   className,
 }: CodeBlockProps) {
   const html = await highlightCode(code, lang);
+  const label = title ?? lang;
 
   return (
     <div
       className={cn(
-        "codeblock overflow-hidden rounded-xl border border-border bg-muted/40 shadow-sm",
+        "codeblock overflow-hidden rounded-2xl border border-border bg-card shadow-sm",
         className,
       )}
     >
-      {(title || lang) && (
-        <div className="flex items-center justify-between border-b border-border/70 bg-muted/50 px-4 py-2">
-          <div className="flex items-center gap-2">
-            <span className="flex gap-1.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-rose-400/70" />
-              <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
-            </span>
-            <span className="ml-2 font-mono text-xs text-muted-foreground">
-              {title ?? lang}
-            </span>
-          </div>
-          <CopyButton text={code} />
-        </div>
-      )}
-      <div className="overflow-x-auto p-4">
+      <div className="flex items-center justify-between gap-3 border-b border-border/70 bg-muted/40 px-4 py-2.5">
+        <span className="flex min-w-0 items-center gap-2 font-mono text-xs text-muted-foreground">
+          <ChevronRight className="h-3.5 w-3.5 shrink-0 text-primary" />
+          <span className="truncate">{label}</span>
+        </span>
+        <CopyButton text={code} showLabel />
+      </div>
+      <div className="overflow-x-auto bg-muted/40 p-5">
         <div
           className="shiki-root"
           dangerouslySetInnerHTML={{ __html: html }}

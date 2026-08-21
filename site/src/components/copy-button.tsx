@@ -2,8 +2,17 @@
 
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
-export function CopyButton({ text }: { text: string }) {
+export function CopyButton({
+  text,
+  showLabel = false,
+  className,
+}: {
+  text: string;
+  showLabel?: boolean;
+  className?: string;
+}) {
   const [copied, setCopied] = useState(false);
 
   async function onCopy() {
@@ -21,13 +30,38 @@ export function CopyButton({ text }: { text: string }) {
     setTimeout(() => setCopied(false), 1800);
   }
 
+  if (showLabel) {
+    return (
+      <button
+        type="button"
+        onClick={onCopy}
+        aria-label="Copy code to clipboard"
+        className={cn(
+          "inline-flex h-7 items-center gap-1.5 rounded-md border border-border bg-card px-2.5 text-xs font-medium text-foreground/70 shadow-sm transition-colors hover:bg-accent hover:text-foreground",
+          copied && "border-emerald-500/40 text-emerald-500",
+          className,
+        )}
+      >
+        {copied ? (
+          <Check className="h-3.5 w-3.5" />
+        ) : (
+          <Copy className="h-3.5 w-3.5" />
+        )}
+        {copied ? "Copied" : "Copy"}
+      </button>
+    );
+  }
+
   return (
     <button
       type="button"
       onClick={onCopy}
       aria-label="Copy code to clipboard"
       title="Copy code"
-      className="inline-flex h-7 w-7 items-center justify-center rounded-md text-foreground/50 transition-colors hover:bg-foreground/10 hover:text-foreground"
+      className={cn(
+        "inline-flex h-7 w-7 items-center justify-center rounded-md text-foreground/50 transition-colors hover:bg-foreground/10 hover:text-foreground",
+        className,
+      )}
     >
       {copied ? (
         <Check className="h-3.5 w-3.5 text-emerald-500" />
