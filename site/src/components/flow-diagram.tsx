@@ -10,7 +10,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-function FlowStep({
+export function FlowStep({
   icon: Icon,
   title,
   path,
@@ -34,7 +34,7 @@ function FlowStep({
   );
 }
 
-function FlowDataChip({
+export function FlowDataChip({
   icon: Icon,
   path,
   label,
@@ -61,7 +61,7 @@ function FlowDataChip({
   );
 }
 
-function FlowConnector() {
+export function FlowConnector() {
   return (
     <div className="flex justify-center py-1.5">
       <div className="flex flex-col items-center">

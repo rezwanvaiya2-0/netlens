@@ -3,6 +3,11 @@ import { DocsPageLayout } from "@/components/docs-layout";
 import { PageHeader } from "@/components/page-header";
 import { Callout } from "@/components/callout";
 import { CodeBlock } from "@/components/code-block";
+import {
+  ArchitectureDiagram,
+  LibreNMSDataFlow,
+  NfdumpExplain,
+} from "@/components/librenms-diagrams";
 
 export const metadata: Metadata = {
   title: "LibreNMS Integration",
@@ -92,11 +97,7 @@ export default function LibreNMSIntegrationPage() {
           <code>nfdump</code> binary. LibreNMS runs this command on its own
           server:
         </p>
-        <CodeBlock
-          lang="bash"
-          title="nfdump invocation"
-          code={`nfdump -M <base>/profiles-data/live/<source> -T -R <range> -n N -s ...`}
-        />
+        <NfdumpExplain />
         <p>
           So it must be able to see <code>profiles-data/live/...</code>{" "}
           <strong>and</strong> have <code>nfdump</code> installed. This
@@ -120,21 +121,7 @@ export default function LibreNMSIntegrationPage() {
         </Callout>
 
         <h2>2 — Recommended architecture</h2>
-        <CodeBlock
-          lang="text"
-          title="architecture"
-          code={`   Your VPS (Docker NetLens)                  LibreNMS server
-   ---------------------------                -----------------
-   docker-compose.yml                          LibreNMS web UI
-   |-- nfsen-data/  = profiles-data  --NFS(ro)-->  /var/nfsen/profiles-data
-   |-- nfsen-stat/  = profiles-stat  --NFS(ro)-->  /var/nfsen/profiles-stat
-   |-- nfsen-var/   = logs (NOT shared)
-   \`-- nfsen-etc/   = config (NOT shared -- contains .htpasswd!)
-
-   NfSen writes here          |        LibreNMS READS here (never writes)
-   (one writer only)          |        nfdump (1.6.25) reads the flow files
-                              v        RRD files render the channel graphs`}
-        />
+        <ArchitectureDiagram />
         <p>
           Rule: <strong>NFS share = read-only for the LibreNMS server.</strong>{" "}
           NfSen never reads back from it. This is the "one writer" rule — it
@@ -142,14 +129,7 @@ export default function LibreNMSIntegrationPage() {
         </p>
 
         <h3>Data flow</h3>
-        <CodeBlock
-          lang="text"
-          title="data flow"
-          code={`Router exporters --> UDP ports 2055/2056 --> nfcapd
-      --> nfsen-data (raw flows) --> nfsend --> NfSen dashboard
-      --> (read-only NFS) --> LibreNMS nfdump --> Netflow tab
-      NfSen dashboard --(RRD graphs)--> LibreNMS Netflow tab`}
-        />
+        <LibreNMSDataFlow />
 
         <Callout type="info" title="Why not share the other folders?">
           We deliberately do <strong>not</strong> export{" "}
