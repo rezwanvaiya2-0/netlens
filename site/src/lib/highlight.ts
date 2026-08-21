@@ -18,16 +18,16 @@ export async function highlightCode(
     return await codeToHtml(code, {
       lang,
       themes: {
-        light: "github-light",
-        dark: "github-dark",
+        light: "github-light-high-contrast",
+        dark: "github-dark-high-contrast",
       },
     });
   } catch {
     return await codeToHtml(code, {
       lang: "text",
       themes: {
-        light: "github-light",
-        dark: "github-dark",
+        light: "github-light-high-contrast",
+        dark: "github-dark-high-contrast",
       },
     });
   }

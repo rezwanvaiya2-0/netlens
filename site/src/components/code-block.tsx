@@ -38,7 +38,7 @@ export async function CodeBlock({
         </span>
         <CopyButton text={code} showLabel />
       </div>
-      <div className="overflow-x-auto bg-muted/30 p-5 sm:p-6">
+      <div className="overflow-x-auto bg-[#f6f8fa] p-5 dark:bg-[#0d1117] sm:p-6">
         <div
           className="shiki-root"
           dangerouslySetInnerHTML={{ __html: html }}

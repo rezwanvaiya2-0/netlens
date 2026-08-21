@@ -13,7 +13,7 @@ export function Terminal() {
         </span>
         <CopyButton text={fullCommand} showLabel />
       </div>
-      <div className="min-h-[8rem] p-5 font-mono text-[0.9rem] leading-7">
+      <div className="min-h-[8rem] p-5 font-mono text-[0.95rem] leading-7">
         <TypingCommand lines={SITE.installCommands} />
       </div>
     </div>
