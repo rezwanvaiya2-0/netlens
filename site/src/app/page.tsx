@@ -310,7 +310,7 @@ sudo ./install.sh`}
                         One command, takes effect instantly — no restart needed:
                       </p>
                       <div className="mt-3 flex items-center justify-between gap-3 rounded-lg border border-border bg-background/70 px-3 py-2.5">
-                        <code className="min-w-0 break-all font-mono text-[0.78rem] leading-5 text-foreground">
+                        <code className="min-w-0 break-all font-mono text-[0.85rem] leading-6 text-foreground">
                           docker exec netlens htpasswd -b
                           /var/nfsen/etc/.htpasswd admin YourNewPass123
                         </code>

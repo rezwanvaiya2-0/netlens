@@ -204,7 +204,7 @@ function CommandList({ items }: { items: CommandItem[] }) {
           className="overflow-hidden rounded-xl border border-border bg-card shadow-sm"
         >
           <div className="flex items-start justify-between gap-3 border-b border-border/70 bg-muted/40 px-4 py-2.5">
-            <code className="min-w-0 break-all font-mono text-[0.8rem] leading-5 text-foreground">
+            <code className="min-w-0 break-all font-mono text-[0.85rem] leading-6 text-foreground">
               {item.cmd}
             </code>
             <CopyButton text={item.cmd} />
