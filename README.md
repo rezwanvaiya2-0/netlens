@@ -27,6 +27,7 @@
 8. [Storage Full — Recover Disk Space](#storage-full--recover-disk-space)
 9. [Security](#security)
 10. [Troubleshooting](#troubleshooting)
+11. [LibreNMS Integration](https://netlens.rezwan.bro.bd/integration/librenms-integration)
 
 ## Quick Start
 
@@ -505,6 +506,21 @@ docker exec netlens /var/nfsen/bin/nfsen status
 
 # Access Web UI: http://<YOUR_IP>:8070/nfsen.php
 ```
+
+---
+
+## LibreNMS Integration
+
+Show NetFlow graphs and Top-N statistics from NetLens directly inside [LibreNMS](https://www.librenms.org/) running on a **different machine**.
+
+The full, step-by-step guide covers:
+
+- Sharing `nfsen-data/` and `nfsen-stat/` over **read-only NFS** (one-writer rule)
+- Installing **nfdump 1.6.25** on the LibreNMS server to match the container's v1.6 file format (Ubuntu 24.04 ships the incompatible 1.7.3)
+- Configuring LibreNMS (`nfsen_enable`, `nfsen_suffix`, `nfsen_subdirlayout`, …) so the **Netflow tab** appears on every device page
+- Matching NfSen source names to LibreNMS device hostnames (21-char limit, dots → `_`, IP symlinks)
+
+> **Read the complete guide:** [LibreNMS Integration](https://netlens.rezwan.bro.bd/integration/librenms-integration)
 
 ---
 
