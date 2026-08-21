@@ -219,27 +219,48 @@ html:not(.dark) .shiki span {
 }
 
 .docs table {
-  @apply my-2 w-full border-collapse overflow-hidden rounded-xl text-sm;
+  @apply my-2 w-full text-sm;
   display: block;
   overflow-x: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.75rem;
 }
 
 .docs table thead {
   @apply bg-muted/60;
+  display: table-header-group;
 }
 
 .docs table th {
-  @apply whitespace-nowrap border-b border-border px-4 py-2.5 text-left font-semibold text-foreground;
+  @apply whitespace-nowrap px-4 py-2.5 text-left font-semibold text-foreground;
+  border-bottom: 1px solid hsl(var(--border));
+  border-right: 1px solid hsl(var(--border));
+}
+
+.docs table th:last-child {
+  border-right: 0;
 }
 
 .docs table td {
-  @apply border-b border-border/70 px-4 py-2.5 align-top text-foreground/80;
+  @apply px-4 py-2.5 align-top text-foreground/80;
+  border-bottom: 1px solid hsl(var(--border) / 0.7);
+  border-right: 1px solid hsl(var(--border) / 0.7);
+}
+
+.docs table td:last-child {
+  border-right: 0;
 }
 
 .docs table tr:last-child td {
-  @apply border-b-0;
+  border-bottom: 0;
 }
 
 .docs tbody tr {
-  @apply transition-colors hover:bg-muted/30;
+  @apply transition-colors;
+}
+
+.docs tbody tr:hover {
+  background: hsl(var(--muted) / 0.3);
 }
