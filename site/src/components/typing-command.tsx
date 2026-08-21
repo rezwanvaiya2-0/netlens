@@ -37,11 +37,11 @@ export function TypingCommand({
         const isVisibleLine = i < visible || isActive;
         if (!isVisibleLine) return null;
         return (
-          <div key={i} className="flex flex-nowrap items-baseline gap-2 whitespace-pre">
+          <div key={i} className="flex flex-wrap items-baseline gap-x-2">
             <span className="select-none font-semibold text-emerald-400">
               {prompt}
             </span>
-            <span className="text-foreground/90">
+            <span className="min-w-0 break-words text-foreground/90">
               {line.slice(0, showCount)}
             </span>
             {isActive && (
