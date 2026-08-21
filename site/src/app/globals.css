@@ -215,16 +215,9 @@ html:not(.dark) .shiki span {
   @apply border-border;
 }
 
-.docs code {
-  @apply rounded-md border border-border bg-muted px-[0.35rem] py-[0.15rem] font-mono text-[0.82em] text-foreground;
-}
-
-.docs pre {
-  @apply overflow-x-auto rounded-xl border border-border bg-muted/40 p-0;
-}
-
-.docs pre code {
-  @apply border-0 bg-transparent p-0 text-inherit;
+/* Inline code only — never the shiki code blocks (their parent is <pre>). */
+.docs :not(pre) > code {
+  @apply rounded-md border border-border bg-muted px-[0.35rem] py-[0.15rem] font-mono text-[0.85em] text-foreground;
 }
 
 .docs table {
