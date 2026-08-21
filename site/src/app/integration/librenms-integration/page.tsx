@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CircleCheck, CircleX } from "lucide-react";
 import { DocsPageLayout } from "@/components/docs-layout";
 import { PageHeader } from "@/components/page-header";
 import { Callout } from "@/components/callout";
@@ -25,60 +26,63 @@ export default function LibreNMSIntegrationPage() {
       />
 
       <div className="docs">
-        <h2>0 — At a glance (TL;DR)</h2>
-        <ol>
-          <li>
-            <strong>NetLens (Docker) stays on the VPS and keeps writing</strong>{" "}
-            to its local folders — no other writer ever touches the live data.
-          </li>
-          <li>
-            <strong>Share only these two folders over NFS, read-only</strong>,
-            to the LibreNMS server:
-            <ul>
-              <li>
-                <code>nfsen-data/</code> (= container{" "}
-                <code>/var/nfsen/profiles-data</code> → raw flow files)
-              </li>
-              <li>
-                <code>nfsen-stat/</code> (= container{" "}
-                <code>/var/nfsen/profiles-stat</code> → RRD graph files)
-              </li>
-            </ul>
-          </li>
-          <li>
-            <strong>Install nfdump 1.6.25 on the LibreNMS server</strong> to
-            match the container's v1.6 file format. Ubuntu 24.04's default apt
-            package is nfdump 1.7.3 — an incompatible format — and 1.6.17
-            itself crashes on 24.04's toolchain, so build 1.6.25 from source.{" "}
-            <a href="#5-part-3-install-nfdump-on-the-librenms-server">
-              See Part 3
-            </a>
-            .
-          </li>
-          <li>
-            <strong>Tell LibreNMS where the data is</strong> ({" "}
-            <code>lnms config:set</code>) and the <strong>Netflow tab</strong>{" "}
-            appears on every device page.
-          </li>
-          <li>
-            <strong>Never run two NfSen instances writing to the same shared
-            folder.</strong> Ever.
-          </li>
-        </ol>
-
-        <Callout type="danger" title="One writer rule">
-          Only the Dockerized NfSen on the VPS writes to the data folders. The
-          NFS share is strictly read-only for LibreNMS. NfSen uses SysV
-          semaphores that exist <em>per host</em> — two instances cannot
-          coordinate and will corrupt each other's 5-minute files.
-        </Callout>
-
-        <Callout type="info" title="Read this guide in order">
-          The recommended pattern is <strong>Pattern A</strong>: NetLens
-          remains the only writer, while LibreNMS reads the two exported data
-          folders over NFS. The version, naming, and mount-path rules later in
-          this guide are part of the same integration contract.
-        </Callout>
+        <div className="my-5 rounded-2xl border border-border bg-card/70 p-5 shadow-sm sm:p-6">
+          <p className="text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            At a glance
+          </p>
+          <ul className="mt-5 space-y-3.5">
+            <li className="flex items-start gap-2.5 text-sm leading-6 text-foreground/85">
+              <CircleCheck className="mt-1 h-4 w-4 shrink-0 text-emerald-500" />
+              <span>
+                <strong>NetLens stays on the VPS and keeps writing</strong> to
+                its local folders — no other writer ever touches the live data.
+              </span>
+            </li>
+            <li className="flex items-start gap-2.5 text-sm leading-6 text-foreground/85">
+              <CircleCheck className="mt-1 h-4 w-4 shrink-0 text-emerald-500" />
+              <span>
+                <strong>Share exactly two folders over NFS, read-only:</strong>
+                <span className="mx-1.5 inline-flex items-center rounded-md border border-border bg-muted px-2 py-0.5 font-mono text-xs text-foreground">
+                  nfsen-data/
+                </span>
+                and
+                <span className="mx-1.5 inline-flex items-center rounded-md border border-border bg-muted px-2 py-0.5 font-mono text-xs text-foreground">
+                  nfsen-stat/
+                </span>
+              </span>
+            </li>
+            <li className="flex items-start gap-2.5 text-sm leading-6 text-foreground/85">
+              <CircleCheck className="mt-1 h-4 w-4 shrink-0 text-emerald-500" />
+              <span>
+                <strong>Build nfdump 1.6.25</strong> on the LibreNMS server to
+                match the container's v1.6 file format (1.7.3 and 1.6.17 are
+                both wrong on Ubuntu 24.04).
+              </span>
+            </li>
+            <li className="flex items-start gap-2.5 text-sm leading-6 text-foreground/85">
+              <CircleCheck className="mt-1 h-4 w-4 shrink-0 text-emerald-500" />
+              <span>
+                <strong>Configure LibreNMS</strong> with{" "}
+                <code>lnms config:set</code> and the{" "}
+                <strong>Netflow tab</strong> appears on every device page.
+              </span>
+            </li>
+            <li className="flex items-start gap-2.5 text-sm leading-6 text-foreground/85">
+              <CircleX className="mt-1 h-4 w-4 shrink-0 text-rose-500" />
+              <span>
+                <strong>Never run two NfSen instances</strong> writing to the
+                same shared folder — SysV semaphores are per-host and they will
+                corrupt each other's 5-minute files.
+              </span>
+            </li>
+          </ul>
+          <div className="mt-5 rounded-xl border border-primary/30 bg-primary/5 px-4 py-3 text-sm leading-6 text-foreground/80">
+            <strong className="text-foreground">One writer rule:</strong> only
+            the Dockerized NfSen writes to the data folders; the NFS share is
+            strictly read-only for LibreNMS. Read the sections in order — the
+            version, naming, and mount-path rules are one contract.
+          </div>
+        </div>
 
         <h2>1 — What LibreNMS actually needs from NfSen</h2>
         <p>
