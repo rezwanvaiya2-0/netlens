@@ -1,12 +1,19 @@
-# Dependencies
-node_modules/
+# dependencies
+/node_modules
 
-# Astro dev cache
-.astro/
+# next.js
+/.next/
+/out/
+/build
 
-# Build output (deployed copy lives at the gh-pages branch root)
-dist/
-
-# OS / editor noise
+# misc
 .DS_Store
+*.pem
 *.local
+
+# debug
+npm-debug.log*
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

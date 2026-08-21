@@ -1,0 +1,245 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 47% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 47% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 47% 9%;
+    --primary: 187 92% 38%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 30% 96%;
+    --secondary-foreground: 222 32% 18%;
+    --muted: 210 30% 96%;
+    --muted-foreground: 215 18% 44%;
+    --accent: 187 65% 93%;
+    --accent-foreground: 187 80% 22%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 187 92% 38%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222 47% 5%;
+    --foreground: 210 40% 96%;
+    --card: 222 44% 7%;
+    --card-foreground: 210 40% 96%;
+    --popover: 222 44% 6%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 187 92% 53%;
+    --primary-foreground: 222 47% 5%;
+    --secondary: 217 33% 12%;
+    --secondary-foreground: 210 40% 90%;
+    --muted: 217 33% 12%;
+    --muted-foreground: 215 20% 66%;
+    --accent: 187 80% 13%;
+    --accent-foreground: 187 92% 53%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 217 33% 14%;
+    --input: 217 33% 14%;
+    --ring: 187 92% 53%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.25);
+  }
+
+  /* Thin, theme-aware scrollbars */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 999px;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    @apply bg-gradient-to-r from-cyan-500 via-teal-400 to-cyan-400 bg-clip-text text-transparent;
+  }
+
+  .bg-grid {
+    background-image: linear-gradient(
+        to right,
+        hsl(var(--border) / 0.4) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, hsl(var(--border) / 0.4) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .glow {
+    box-shadow:
+      0 0 0 1px hsl(var(--primary) / 0.25),
+      0 8px 40px -12px hsl(var(--primary) / 0.35);
+  }
+}
+
+/* ============================================================
+   Shiki dual-theme token colors (light + dark)
+   ============================================================ */
+.shiki {
+  background: transparent !important;
+  margin: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.825rem;
+  line-height: 1.7;
+  tab-size: 2;
+}
+
+.shiki code {
+  display: block;
+  min-width: 100%;
+}
+
+html:not(.dark) .shiki span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+  font-style: var(--shiki-light-font-style);
+  font-weight: var(--shiki-light-font-weight);
+  text-decoration: var(--shiki-light-text-decoration);
+}
+
+.dark .shiki span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+  font-style: var(--shiki-dark-font-style);
+  font-weight: var(--shiki-dark-font-weight);
+  text-decoration: var(--shiki-dark-text-decoration);
+}
+
+/* ============================================================
+   Docs prose typography
+   ============================================================ */
+.docs {
+  @apply text-[15px] leading-7 text-foreground/90;
+}
+
+.docs > * + * {
+  @apply mt-5;
+}
+
+.docs h1 {
+  @apply scroll-m-20 text-3xl font-bold tracking-tight text-foreground sm:text-4xl;
+}
+
+.docs h2 {
+  @apply mt-12 scroll-m-24 border-b border-border/70 pb-3 text-2xl font-semibold tracking-tight text-foreground;
+}
+
+.docs h3 {
+  @apply mt-8 scroll-m-24 text-xl font-semibold tracking-tight text-foreground;
+}
+
+.docs h4 {
+  @apply mt-6 scroll-m-24 text-base font-semibold text-foreground;
+}
+
+.docs h2 + *,
+.docs h3 + * {
+  @apply mt-4;
+}
+
+.docs p {
+  @apply text-foreground/85;
+}
+
+.docs strong {
+  @apply font-semibold text-foreground;
+}
+
+.docs em {
+  @apply text-foreground/80;
+}
+
+.docs a:not(.docs-heading-link) {
+  @apply font-medium text-primary underline decoration-primary/40 underline-offset-4 transition-colors hover:decoration-primary;
+}
+
+.docs ul {
+  @apply my-2 list-disc space-y-2 pl-6 marker:text-primary/70;
+}
+
+.docs ol {
+  @apply my-2 list-decimal space-y-2 pl-6 marker:text-primary/70;
+}
+
+.docs li > ul,
+.docs li > ol {
+  @apply mt-2;
+}
+
+.docs blockquote {
+  @apply border-l-4 border-primary/60 pl-4 text-muted-foreground italic;
+}
+
+.docs hr {
+  @apply border-border;
+}
+
+.docs code {
+  @apply rounded-md border border-border bg-muted px-[0.35rem] py-[0.15rem] font-mono text-[0.82em] text-foreground;
+}
+
+.docs pre {
+  @apply overflow-x-auto rounded-xl border border-border bg-muted/40 p-0;
+}
+
+.docs pre code {
+  @apply border-0 bg-transparent p-0 text-inherit;
+}
+
+.docs table {
+  @apply my-2 w-full border-collapse overflow-hidden rounded-xl text-sm;
+  display: block;
+  overflow-x: auto;
+}
+
+.docs table thead {
+  @apply bg-muted/60;
+}
+
+.docs table th {
+  @apply whitespace-nowrap border-b border-border px-4 py-2.5 text-left font-semibold text-foreground;
+}
+
+.docs table td {
+  @apply border-b border-border/70 px-4 py-2.5 align-top text-foreground/80;
+}
+
+.docs table tr:last-child td {
+  @apply border-b-0;
+}
+
+.docs tbody tr {
+  @apply transition-colors hover:bg-muted/30;
+}

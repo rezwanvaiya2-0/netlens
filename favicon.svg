@@ -1,1 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="NetLens"><defs><linearGradient id="c" x1="8" y1="8" x2="40" y2="40"><stop stop-color="#67e8f9"/><stop offset=".55" stop-color="#06b6d4"/><stop offset="1" stop-color="#0891b2"/></linearGradient></defs><rect x="2" y="2" width="44" height="44" rx="11" fill="#07161b" stroke="#19444d" stroke-width="1.5"/><path d="M9 17h8l6 6 9-9" fill="none" stroke="url(#c)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/><circle cx="9" cy="17" r="2.5" fill="#67e8f9"/><circle cx="32" cy="14" r="2.5" fill="#22d3ee"/><circle cx="24" cy="25" r="11" fill="#07161b" stroke="url(#c)" stroke-width="3"/><path d="M17 20c2-3 4-5 8-6" fill="none" stroke="#cffafe" stroke-linecap="round" stroke-width="1.5"/><circle cx="24" cy="25" r="2" fill="#ecfeff"/><path d="m32 33 7 7" fill="none" stroke="url(#c)" stroke-linecap="round" stroke-width="4"/></svg>
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#2dd4bf"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="36" height="36" rx="10" fill="url(#g)"/>
+  <g stroke="#0b1417" stroke-linecap="round">
+    <circle cx="20" cy="20" r="10" stroke-width="1.7" opacity="0.85"/>
+    <circle cx="20" cy="20" r="5.4" stroke-width="1.4" opacity="0.6"/>
+    <path d="M20 20 L20 10" stroke-width="1.7"/>
+  </g>
+  <circle cx="20" cy="20" r="2.7" fill="#0b1417"/>
+  <circle cx="20" cy="10" r="2.3" fill="#0b1417"/>
+  <circle cx="27.2" cy="14.8" r="1.8" fill="#0b1417"/>
+  <circle cx="14" cy="15.6" r="1.8" fill="#0b1417"/>
+  <circle cx="22.6" cy="27" r="1.8" fill="#0b1417"/>
+</svg>
